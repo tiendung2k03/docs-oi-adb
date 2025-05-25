@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OIADB - Thư viện Python Wrapper cho Android Debug Bridge</title>
+    <meta name="description" content="OIADB là thư viện Python wrapper cho Android Debug Bridge (ADB) với nhiều tính năng mạnh mẽ như nhận diện hình ảnh và XML dump.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap">
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    <!-- Preload key assets -->
+    <link rel="preload" href="images/hero-image.png" as="image">
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <a href="./" class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24">
+                    <path d="M17.6,9.48l1.84-3.18c0.16-0.31,0.04-0.69-0.26-0.85c-0.29-0.15-0.65-0.06-0.83,0.22l-1.88,3.24 c-2.86-1.21-6.08-1.21-8.94,0L5.65,5.67c-0.19-0.29-0.58-0.38-0.87-0.2C4.5,5.65,4.41,6.01,4.56,6.3L6.4,9.48 C3.3,11.25,1.28,14.44,1,18h22C22.72,14.44,20.7,11.25,17.6,9.48z M7,15.25c-0.69,0-1.25-0.56-1.25-1.25 c0-0.69,0.56-1.25,1.25-1.25S8.25,13.31,8.25,14C8.25,14.69,7.69,15.25,7,15.25z M17,15.25c-0.69,0-1.25-0.56-1.25-1.25 c0-0.69,0.56-1.25,1.25-1.25s1.25,0.56,1.25,1.25C18.25,14.69,17.69,15.25,17,15.25z"></path>
+                </svg>
+                <span class="logo-text">OIADB</span>
+            </a>
+            
+            <div class="main-nav">
+                <button class="menu-toggle" aria-label="Toggle menu">
+                    <span class="hamburger"></span>
+                </button>
+                
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="./" class="active">Trang chủ</a></li>
+                        <li><a href="getting-started.html">Bắt đầu</a></li>
+                        <li><a href="features.html">Tính năng</a></li>
+                        <li><a href="api-reference.html">API Reference</a></li>
+                        <li><a href="guides.html">Hướng dẫn</a></li>
+                        <li><a href="examples.html">Ví dụ</a></li>
+                        <li><a href="resources.html">Tài nguyên</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="theme-switch-wrapper">
+                    <label class="theme-switch" for="theme-switch">
+                        <input type="checkbox" id="theme-switch">
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="theme-label"><i class="fas fa-moon"></i></span>
+                </div>
+                
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Tìm kiếm...">
+                    <button id="search-button" aria-label="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <div id="search-results" class="search-results"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title-animated">OIADB - Python Wrapper cho Android Debug Bridge</h1>
+                <p class="subtitle">Thư viện Python mạnh mẽ giúp tự động hóa và tương tác với thiết bị Android thông qua ADB với các tính năng nâng cao như nhận diện hình ảnh và XML dump.</p>
+                
+                <div class="cta-buttons">
+                    <a href="getting-started.html" class="btn btn-primary">
+                        Bắt đầu ngay <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="https://github.com/tiendung102k3/oiadb" class="btn btn-secondary" target="_blank">
+                        GitHub <i class="fab fa-github"></i>
+                    </a>
+                </div>
+                
+                <div class="install-command">
+                    <pre><code>pip install oiadb</code></pre>
+                    <button class="copy-btn" aria-label="Copy to clipboard">
+                        <i class="far fa-copy"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="hero-image">
+                <img src="images/hero-image.png" alt="OIADB Illustration" class="float">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Tính năng chính</h2>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <h3>Tự động cài đặt ADB</h3>
+                    <p>Tự động tải xuống và cài đặt ADB nếu cần, không yêu cầu cài đặt thủ công.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <h3>Nhận diện hình ảnh</h3>
+                    <p>Tìm kiếm và tương tác với các phần tử trên màn hình dựa trên hình ảnh mẫu.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>XML Dump & Trợ năng</h3>
+                    <p>Truy xuất cấu trúc UI và tương tác với các phần tử thông qua API trợ năng.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Quản lý thiết bị</h3>
+                    <p>Dễ dàng kết nối và quản lý nhiều thiết bị Android, bao gồm cả kết nối không dây.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Đa nền tảng</h3>
+                    <p>Hỗ trợ Windows, macOS, Linux và thậm chí cả Termux trên Android.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>API đơn giản</h3>
+                    <p>Giao diện lập trình đơn giản và trực quan giúp tự động hóa các tác vụ phức tạp.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture Section -->
+    <section class="architecture">
+        <div class="container">
+            <h2 class="section-title">Kiến trúc OIADB</h2>
+            
+            <div class="architecture-content">
+                <div class="architecture-diagram">
+                    <img src="images/architecture.png" alt="OIADB Architecture Diagram">
+                </div>
+                
+                <div class="architecture-text">
+                    <p>OIADB được thiết kế với kiến trúc module hóa, cho phép mở rộng dễ dàng và tích hợp liền mạch với các dự án Python khác.</p>
+                    
+                    <ul>
+                        <li>Lớp <strong>MyADB</strong> cung cấp giao diện chính để tương tác với ADB</li>
+                        <li>Module <strong>commands</strong> chứa các lệnh được nhóm theo chức năng</li>
+                        <li>Module <strong>image_recognition</strong> xử lý tìm kiếm và tương tác dựa trên hình ảnh</li>
+                        <li>Module <strong>xml_dump</strong> quản lý truy xuất và phân tích cấu trúc UI</li>
+                        <li>Module <strong>utils</strong> cung cấp các tiện ích và hàm trợ giúp</li>
+                    </ul>
+                    
+                    <a href="api-reference.html" class="btn btn-outline">Xem tài liệu API đầy đủ</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Start Section -->
+    <section class="quick-start">
+        <div class="container">
+            <h2 class="section-title">Bắt đầu nhanh</h2>
+            
+            <div class="code-tabs">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="tab-install">Cài đặt</button>
+                    <button class="tab-btn" data-tab="tab-basic">Sử dụng cơ bản</button>
+                    <button class="tab-btn" data-tab="tab-image">Nhận diện hình ảnh</button>
+                    <button class="tab-btn" data-tab="tab-xml">XML Dump</button>
+                </div>
+                
+                <div class="tab-content">
+                    <div id="tab-install" class="tab-pane active">
+                        <pre><code class="language-bash"># Cài đặt cơ bản
+pip install oiadb
+
+# Cài đặt với hỗ trợ nhận diện hình ảnh
+pip install oiadb[image]
+
+# Cài đặt từ mã nguồn
+git clone https://github.com/tiendung102k3/oiadb
+cd oiadb
+pip install -e .</code></pre>
+                    </div>
+                    
+                    <div id="tab-basic" class="tab-pane">
+                        <pre><code class="language-python">from oiadb import MyADB
+
+# Khởi tạo với thiết bị mặc định
+adb = MyADB()
+
+# Hoặc chỉ định thiết bị cụ thể
+adb = MyADB(device_id="emulator-5554")
+
+# Liệt kê các thiết bị đã kết nối
+devices = adb.get_devices()
+print(devices)
+
+# Cài đặt ứng dụng
+adb.install_app("/path/to/app.apk")
+
+# Gỡ cài đặt ứng dụng
+adb.uninstall_app("com.example.app")</code></pre>
+                    </div>
+                    
+                    <div id="tab-image" class="tab-pane">
+                        <pre><code class="language-python">from oiadb.commands import image_interaction
+
+# Tìm hình ảnh đơn
+result = image_interaction.find_image(
+    template_path="/path/to/template.png",
+    threshold=0.8,  # Ngưỡng tương đồng (0.0 - 1.0)
+    region=None,    # Vùng tìm kiếm (x, y, width, height), None = toàn màn hình
+    scale_range=(0.8, 1.2),  # Phạm vi tỷ lệ để tìm kiếm
+    scale_steps=5,  # Số bước tỷ lệ
+    rotation_range=(0, 0),  # Phạm vi góc xoay (độ)
+    rotation_steps=1,  # Số bước góc xoay
+    use_gray=True,  # Sử dụng ảnh xám để tăng tốc độ
+    use_canny=False  # Sử dụng phát hiện cạnh Canny cho hình ảnh mờ
+)
+
+if result:
+    x, y, confidence = result
+    print(f"Đã tìm thấy hình ảnh tại ({x}, {y}) với độ tương đồng {confidence}")
+else:
+    print("Không tìm thấy hình ảnh")</code></pre>
+                    </div>
+                    
+                    <div id="tab-xml" class="tab-pane">
+                        <pre><code class="language-python">from oiadb.commands import xml_dump
+
+# Lấy cấu trúc XML của giao diện người dùng hiện tại
+xml_tree = xml_dump.get_ui_xml()
+
+# Tìm phần tử theo văn bản
+element = xml_dump.find_element_by_text("Login")
+if element:
+    # Nhấp vào phần tử
+    xml_dump.click_element(element)
+
+# Tìm phần tử theo thuộc tính
+element = xml_dump.find_element_by_attribute("resource-id", "com.example.app:id/username")
+if element:
+    # Nhập văn bản vào phần tử
+    xml_dump.input_text(element, "username@example.com")</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quick-links">
+                <a href="getting-started.html" class="btn btn-outline">Hướng dẫn chi tiết</a>
+                <a href="examples.html" class="btn btn-outline">Xem thêm ví dụ</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Platforms Section -->
+    <section class="platforms">
+        <div class="container">
+            <h2 class="section-title">Hỗ trợ đa nền tảng</h2>
+            
+            <div class="platform-grid">
+                <div class="platform-card">
+                    <div class="platform-icon">
+                        <i class="fab fa-windows"></i>
+                    </div>
+                    <h3>Windows</h3>
+                    <p>Hỗ trợ đầy đủ trên Windows với tự động cài đặt ADB và tất cả các tính năng.</p>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-icon">
+                        <i class="fab fa-apple"></i>
+                    </div>
+                    <h3>macOS</h3>
+                    <p>Tương thích hoàn toàn với macOS, bao gồm cả Intel và Apple Silicon.</p>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-icon">
+                        <i class="fab fa-linux"></i>
+                    </div>
+                    <h3>Linux</h3>
+                    <p>Hỗ trợ các bản phân phối Linux phổ biến với hiệu suất tối ưu.</p>
+                </div>
+                
+                <div class="platform-card">
+                    <div class="platform-icon">
+                        <i class="fas fa-terminal"></i>
+                    </div>
+                    <h3>Termux</h3>
+                    <p>Chạy trực tiếp trên thiết bị Android thông qua Termux với các tính năng cốt lõi.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Sẵn sàng tự động hóa thiết bị Android của bạn?</h2>
+            <p>OIADB giúp đơn giản hóa việc tương tác với thiết bị Android thông qua Python, cho phép bạn tạo các giải pháp tự động hóa mạnh mẽ.</p>
+            
+            <div class="cta-buttons">
+                <a href="getting-started.html" class="btn btn-primary">
+                    Bắt đầu ngay <i class="fas fa-arrow-right"></i>
+                </a>
+                <a href="https://github.com/tiendung102k3/oiadb" class="btn btn-secondary" target="_blank">
+                    Xem trên GitHub <i class="fab fa-github"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>OIADB</h3>
+                    <p>Thư viện Python wrapper cho Android Debug Bridge với các tính năng nâng cao như nhận diện hình ảnh và XML dump.</p>
+                    
+                    <div class="social-links">
+                        <a href="https://github.com/tiendung102k3/oiadb" target="_blank" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://pypi.org/project/oiadb/" target="_blank" aria-label="PyPI">
+                            <i class="fab fa-python"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Tài liệu</h3>
+                    <ul>
+                        <li><a href="getting-started.html">Bắt đầu</a></li>
+                        <li><a href="features.html">Tính năng</a></li>
+                        <li><a href="api-reference.html">API Reference</a></li>
+                        <li><a href="guides.html">Hướng dẫn</a></li>
+                        <li><a href="examples.html">Ví dụ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Tài nguyên</h3>
+                    <ul>
+                        <li><a href="resources.html#changelog">Changelog</a></li>
+                        <li><a href="resources.html#license">Giấy phép</a></li>
+                        <li><a href="resources.html#faq">Câu hỏi thường gặp</a></li>
+                        <li><a href="resources.html#troubleshooting">Xử lý sự cố</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Liên kết</h3>
+                    <ul>
+                        <li><a href="https://github.com/tiendung102k3/oiadb" target="_blank">GitHub</a></li>
+                        <li><a href="https://pypi.org/project/oiadb/" target="_blank">PyPI</a></li>
+                        <li><a href="https://github.com/tiendung102k3/oiadb/issues" target="_blank">Báo cáo lỗi</a></li>
+                        <li><a href="https://github.com/tiendung102k3/oiadb/blob/main/CONTRIBUTING.md" target="_blank">Đóng góp</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 OIADB. Được phát hành dưới giấy phép MIT.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+</body>
+</html>

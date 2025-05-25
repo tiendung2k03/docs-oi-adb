@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hướng dẫn OIADB - Các hướng dẫn chi tiết về cách sử dụng thư viện</title>
+    <meta name="description" content="Hướng dẫn chi tiết về cách sử dụng thư viện OIADB, bao gồm nhận diện hình ảnh, XML dump và các tính năng nâng cao khác.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap">
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <a href="./" class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24">
+                    <path d="M17.6,9.48l1.84-3.18c0.16-0.31,0.04-0.69-0.26-0.85c-0.29-0.15-0.65-0.06-0.83,0.22l-1.88,3.24 c-2.86-1.21-6.08-1.21-8.94,0L5.65,5.67c-0.19-0.29-0.58-0.38-0.87-0.2C4.5,5.65,4.41,6.01,4.56,6.3L6.4,9.48 C3.3,11.25,1.28,14.44,1,18h22C22.72,14.44,20.7,11.25,17.6,9.48z M7,15.25c-0.69,0-1.25-0.56-1.25-1.25 c0-0.69,0.56-1.25,1.25-1.25S8.25,13.31,8.25,14C8.25,14.69,7.69,15.25,7,15.25z M17,15.25c-0.69,0-1.25-0.56-1.25-1.25 c0-0.69,0.56-1.25,1.25-1.25s1.25,0.56,1.25,1.25C18.25,14.69,17.69,15.25,17,15.25z"></path>
+                </svg>
+                <span class="logo-text">OIADB</span>
+            </a>
+            
+            <div class="main-nav">
+                <button class="menu-toggle" aria-label="Toggle menu">
+                    <span class="hamburger"></span>
+                </button>
+                
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="./">Trang chủ</a></li>
+                        <li><a href="getting-started.html">Bắt đầu</a></li>
+                        <li><a href="features.html">Tính năng</a></li>
+                        <li><a href="api-reference.html">API Reference</a></li>
+                        <li><a href="guides.html" class="active">Hướng dẫn</a></li>
+                        <li><a href="examples.html">Ví dụ</a></li>
+                        <li><a href="resources.html">Tài nguyên</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="theme-switch-wrapper">
+                    <label class="theme-switch" for="theme-switch">
+                        <input type="checkbox" id="theme-switch">
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="theme-label"><i class="fas fa-moon"></i></span>
+                </div>
+                
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Tìm kiếm...">
+                    <button id="search-button" aria-label="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <div id="search-results" class="search-results"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Documentation Container -->
+    <div class="container docs-container">
+        <!-- Sidebar -->
+        <aside class="docs-sidebar">
+            <div class="docs-nav">
+                <div class="docs-nav-section">
+                    <a href="#" class="docs-nav-title">Trang chủ</a>
+                    <div class="docs-nav-links">
+                        <a href="./">Quay lại trang chủ</a>
+                    </div>
+                </div>
+                
+                <div class="docs-nav-section">
+                    <a href="#image-recognition" class="docs-nav-title">Nhận diện hình ảnh</a>
+                    <div class="docs-nav-links">
+                        <a href="#image-recognition-basics">Cơ bản về nhận diện hình ảnh</a>
+                        <a href="#image-recognition-templates">Chuẩn bị hình ảnh mẫu</a>
+                        <a href="#image-recognition-advanced">Kỹ thuật nâng cao</a>
+                        <a href="#image-recognition-troubleshooting">Xử lý sự cố</a>
+                    </div>
+                </div>
+                
+                <div class="docs-nav-section">
+                    <a href="#xml-dump" class="docs-nav-title">XML Dump & Trợ năng</a>
+                    <div class="docs-nav-links">
+                        <a href="#xml-dump-basics">Cơ bản về XML Dump</a>
+                        <a href="#xml-dump-finding-elements">Tìm phần tử UI</a>
+                        <a href="#xml-dump-interaction">Tương tác với phần tử</a>
+                        <a href="#xml-dump-performance">Tối ưu hiệu suất</a>
+                    </div>
+                </div>
+                
+                <div class="docs-nav-section">
+                    <a href="#device-management" class="docs-nav-title">Quản lý thiết bị</a>
+                    <div class="docs-nav-links">
+                        <a href="#device-management-connection">Kết nối thiết bị</a>
+                        <a href="#device-management-wireless">Kết nối không dây</a>
+                        <a href="#device-management-multiple">Quản lý nhiều thiết bị</a>
+                    </div>
+                </div>
+                
+                <div class="docs-nav-section">
+                    <a href="#app-automation" class="docs-nav-title">Tự động hóa ứng dụng</a>
+                    <div class="docs-nav-links">
+                        <a href="#app-automation-basics">Cơ bản về tự động hóa</a>
+                        <a href="#app-automation-strategies">Chiến lược tự động hóa</a>
+                        <a href="#app-automation-best-practices">Thực hành tốt nhất</a>
+                    </div>
+                </div>
+                
+                <div class="docs-nav-section">
+                    <a href="#advanced-topics" class="docs-nav-title">Chủ đề nâng cao</a>
+                    <div class="docs-nav-links">
+                        <a href="#advanced-topics-custom-modules">Tạo module tùy chỉnh</a>
+                        <a href="#advanced-topics-error-handling">Xử lý lỗi</a>
+                        <a href="#advanced-topics-logging">Ghi nhật ký</a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="docs-content">
+            <h1>Hướng dẫn OIADB</h1>
+            
+            <section id="image-recognition" class="fade-in">
+                <h2>Nhận diện hình ảnh</h2>
+                
+                <div id="image-recognition-basics">
+                    <h3>Cơ bản về nhận diện hình ảnh</h3>
+                    
+                    <p>Tính năng nhận diện hình ảnh của OIADB cho phép bạn tìm kiếm và tương tác với các phần tử trên màn hình dựa trên hình ảnh mẫu, mà không cần biết tọa độ cố định hoặc cấu trúc UI.</p>
+                    
+                    <div class="info-box">
+                        <h4>Cách hoạt động</h4>
+                        <p>OIADB sử dụng thuật toán so khớp mẫu (template matching) của OpenCV để tìm kiếm hình ảnh mẫu trên ảnh chụp màn hình thiết bị. Quá trình này bao gồm các bước sau:</p>
+                        <ol>
+                            <li>Chụp ảnh màn hình thiết bị</li>
+                            <li>Tải hình ảnh mẫu từ đường dẫn được cung cấp</li>
+                            <li>Áp dụng thuật toán so khớp mẫu để tìm vị trí tốt nhất</li>
+                            <li>Trả về tọa độ và độ tương đồng nếu vượt qua ngưỡng</li>
+                        </ol>
+                    </div>
+                    
+                    <p>Dưới đây là ví dụ cơ bản về cách sử dụng nhận diện hình ảnh:</p>
+                    
+                    <div class="code-block">
+                        <pre><code class="language-python">from oiadb import MyADB
+from oiadb.commands import image_interaction
+
+# Khởi tạo ADB
+adb = MyADB()
+
+# Tìm hình ảnh trên màn hình
+result = image_interaction.find_image("/path/to/button.png", threshold=0.8)
+
+if result:
+    x, y, confidence = result
+    print(f"Đã tìm thấy hình ảnh tại ({x}, {y}) với độ tương đồng {confidence}")
+    
+    # Nhấp vào vị trí đã tìm thấy
+    image_interaction.tap_image("/path/to/button.png")
+else:
+    print("Không tìm thấy hình ảnh")</code></pre>
+                        <button class="copy-btn" aria-label="Copy to clipboard">
+                            <i class="far fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="image-recognition-templates" class="mt-5">
+                    <h3>Chuẩn bị hình ảnh mẫu</h3>
+                    
+                    <p>Chất lượng của hình ảnh mẫu có ảnh hưởng lớn đến độ chính xác của nhận diện. Dưới đây là một số hướng dẫn để tạo hình ảnh mẫu hiệu quả:</p>
+                    
+                    <div class="tips-grid">
+                        <div class="tip-card">
+                            <div class="tip-icon">
+                                <i class="fas fa-crop"></i>
+                            </div>
+                            <h4>Cắt chính xác</h4>
+                            <p>Cắt hình ảnh mẫu để chỉ bao gồm phần tử bạn muốn tìm, loại bỏ các phần không cần thiết xung quanh.</p>
+                        </div>
+                        
+                        <div class="tip-card">
+                            <div class="tip-icon">
+                                <i class="fas fa-fingerprint"></i>
+                            </div>
+                            <h4>Đặc trưng rõ ràng</h4>
+                            <p>Chọn hình ảnh có đặc trưng rõ ràng và dễ phân biệt với các phần khác của màn hình.</p>
+                        </div>
+                        
+                        <div class="tip-card">
+                            <div class="tip-icon">
+                                <i class="fas fa-compress-arrows-alt"></i>
+                            </div>
+                            <h4>Kích thước phù hợp</h4>
+                            <p>Hình ảnh mẫu không nên quá nhỏ (dưới 20x20 pixel) hoặc quá lớn (trên 1/4 màn hình).</p>
+                        </div>
+                        
+                        <div class="tip-card">
+                            <div class="tip-icon">
+                                <i class="fas fa-adjust"></i>
+                            </div>
+                            <h4>Độ tương phản tốt</h4>
+                            <p>Hình ảnh có độ tương phản tốt giữa phần tử và nền sẽ dễ nhận diện hơn.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="warning-box">
+                        <h4>Lưu ý quan trọng</h4>
+                        <p>Hình ảnh mẫu phải được chụp từ cùng một độ phân giải và tỷ lệ màn hình với thiết bị mục tiêu. Nếu bạn thay đổi thiết bị hoặc độ phân giải, bạn có thể cần tạo lại hình ảnh mẫu.</p>
+                    </div>
+                    
+                    <p>Dưới đây là quy trình được đề xuất để tạo hình ảnh mẫu:</p>
+                    
+                    <ol class="step-list">
+                        <li>
+                            <span class="step-number">1</span>
+                            <div class="step-content">
+                                <h4>Chụp ảnh màn hình</h4>
+                                <p>Chụp ảnh màn hình thiết bị mục tiêu với phần tử bạn muốn tìm kiếm.</p>
+                                <div class="code-block">
+                                    <pre><code class="language-python">from oiadb import MyADB
+
+adb = MyADB()
+adb.execute_command("shell screencap -p /sdcard/screenshot.png")
+adb.execute_command("pull /sdcard/screenshot.png .")</code></pre>
+                                </div>
+                            </div>
+                        </li>
+                        
+                        <li>
+                            <span class="step-number">2</span>
+                            <div class="step-content">
+                                <h4>Cắt phần tử mục tiêu</h4>
+                                <p>Sử dụng công cụ chỉnh sửa ảnh để cắt chính xác phần tử bạn muốn tìm kiếm.</p>
+                            </div>
+                        </li>
+                        
+                        <li>
+                            <span class="step-number">3</span>
+                            <div class="step-content">
+                                <h4>Lưu hình ảnh mẫu</h4>
+                                <p>Lưu hình ảnh đã cắt với định dạng PNG để giữ nguyên chất lượng.</p>
+                            </div>
+                        </li>
+                        
+                        <li>
+                            <span class="step-number">4</span>
+                            <div class="step-content">
+                                <h4>Kiểm tra hình ảnh mẫu</h4>
+                                <p>Kiểm tra xem hình ảnh mẫu có thể được tìm thấy trên màn hình không.</p>
+                                <div class="code-block">
+                                    <pre><code class="language-python">result = image_interaction.find_image("template.png")
+print(f"Kết quả tìm kiếm: {result}")</code></pre>
+                                </div>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+                
+                <div id="image-recognition-advanced" class="mt-5">
+                    <h3>Kỹ thuật nâng cao</h3>
+                    
+                    <p>OIADB cung cấp nhiều tùy chọn nâng cao để xử lý các trường hợp phức tạp trong nhận diện hình ảnh.</p>
+                    
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <h4>Tìm kiếm với nhiều tỷ lệ</h4>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Khi hình ảnh mẫu có thể xuất hiện với kích thước khác nhau trên màn hình, bạn có thể sử dụng tìm kiếm đa tỷ lệ:</p>
+                                <div class="code-block">
+                                    <pre><code class="language-python">result = image_interaction.find_image(
+    "template.png",
+    scale_range=(0.5, 1.5),  # Tìm từ 50% đến 150% kích thước gốc
+    scale_steps=10            # Số bước tỷ lệ
+)</code></pre>
+                                </div>
+                                <p>Lưu ý rằng tìm kiếm đa tỷ lệ sẽ chậm hơn tìm kiếm thông thường.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <h4>Tìm kiếm với góc xoay</h4>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Nếu phần tử có thể xuất hiện với các góc xoay khác nhau:</p>
+                                <div class="code-block">
+                                    <pre><code class="language-python">result = image_interaction.find_image(
+    "template.png",
+    rotation_range=(-30, 30),  # Tìm từ -30 đến +30 độ
+    rotation_steps=6           # Số bước góc xoay
+)</code></pre>
+                                </div>
+                                <p>Tìm kiếm với góc xoay sẽ làm giảm đáng kể hiệu suất, chỉ sử dụng khi cần thiết.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <h4>Sử dụng phát hiện cạnh Canny</h4>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Đối với hình ảnh mờ hoặc có độ tương phản thấp, phát hiện cạnh Canny có thể cải thiện kết quả:</p>
+                                <div class="code-block">
+                                    <pre><code class="language-python">result = image_interaction.find_image(
+    "template.png",
+    use_canny=True,  # Bật phát hiện cạnh Canny
+    threshold=0.6    # Có thể sử dụng ngưỡng thấp hơn với Canny
+)</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <h4>Tìm kiếm trong vùng cụ thể</h4>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <p>Để cải thiện hiệu suất và độ chính xác, bạn có thể giới hạn tìm kiếm trong một vùng cụ thể:</p>
+                                <div class="code-block">
+                                    <pre><code class="language-python">result = image_interaction.find_image(
+    "template.png",
+    region=(100, 200, 400, 300)  # (x, y, width, height)
+)</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="image-recognition-troubleshooting" class="mt-5">
+                    <h3>Xử lý sự cố</h3>
+                    
+                    <p>Dưới đây là một số vấn đề thường gặp khi sử dụng nhận diện hình ảnh và cách khắc phục:</p>
+                    
+                    <div class="troubleshooting-grid">
+                        <div class="troubleshooting-item">
+                            <div class="problem">
+                                <h4>Không tìm thấy hình ảnh</h4>
+                                <p>Hình ảnh mẫu không được tìm thấy trên màn hình.</p>
+                            </div>
+                            <div class="solution">
+                                <h4>Giải pháp</h4>
+                                <ul>
+                                    <li>Giảm ngưỡng tương đồng (threshold) xuống 0.7 hoặc thấp hơn</li>
+                                    <li>Kiểm tra xem hình ảnh mẫu có đúng độ phân giải không</li>
+                                    <li>Thử sử dụng tìm kiếm đa tỷ lệ</li>
+                                    <li>Chụp lại hình ảnh mẫu từ thiết bị mục tiêu</li>
+                                </ul>
+                                <div class="code-block">
+                                    <pre><code class="language-python"># Thử với ngưỡng thấp hơn
+result = image_interaction.find_image("template.png", threshold=0.7)</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="troubleshooting-item">
+                            <div class="problem">
+                                <h4>Kết quả không chính xác</h4>
+                                <p>Hình ảnh được tìm thấy nhưng ở vị trí sai.</p>
+                            </div>
+                            <div class="solution">
+                                <h4>Giải pháp</h4>
+                                <ul>
+                                    <li>Tăng ngưỡng tương đồng lên 0.9 hoặc cao hơn</li>
+                                    <li>Sử dụng hình ảnh mẫu có đặc trưng rõ ràng hơn</li>
+                                    <li>Thử sử dụng phát hiện cạnh Canny</li>
+                                </ul>
+                                <div class="code-block">
+                                    <pre><code class="language-python"># Thử với ngưỡng cao hơn và phát hiện cạnh
+result = image_interaction.find_image(
+    "template.png", 
+    threshold=0.9,
+    use_canny=True
+)</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="troubleshooting-item">
+                            <div class="problem">
+                                <h4>Hiệu suất chậm</h4>
+                                <p>Tìm kiếm hình ảnh mất quá nhiều thời gian.</p>
+                            </div>
+                            <div class="solution">
+                                <h4>Giải pháp</h4>
+                                <ul>
+                                    <li>Giới hạn vùng tìm kiếm bằng tham số region</li>
+                                    <li>Giảm kích thước hình ảnh mẫu</li>
+                                    <li>Giảm số bước tỷ lệ và góc xoay</li>
+                                    <li>Đảm bảo use_gray=True để tăng tốc độ</li>
+                                </ul>
+                                <div class="code-block">
+                                    <pre><code class="language-python"># Tối ưu hiệu suất
+result = image_interaction.find_image(
+    "template.png",
+    region=(100, 200, 400, 300),  # Giới hạn vùng tìm kiếm
+    use_gray=True                  # Sử dụng ảnh xám
+)</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="xml-dump" class="fade-in">
+                <h2>XML Dump & Trợ năng</h2>
+                
+                <div id="xml-dump-basics">
+                    <h3>Cơ bản về XML Dump</h3>
+                    
+                    <p>XML Dump là một tính năng mạnh mẽ của OIADB cho phép bạn truy xuất cấu trúc UI của ứng dụng Android dưới dạng XML và tương tác với các phần tử thông qua API trợ năng.</p>
+                    
+                    <div class="info-box">
+                        <h4>Cách hoạt động</h4>
+                        <p>OIADB sử dụng lệnh <code>uiautomator dump</code> của ADB để truy xuất cấu trúc UI hiện tại của thiết bị Android. Cấu trúc này chứa thông tin về tất cả các phần tử UI trên màn hình, bao gồm vị trí, kích thước, văn bản và các thuộc tính khác.</p>
+                    </div>
+                    
+                    <p>Dưới đây là ví dụ cơ bản về cách sử dụng XML Dump:</p>
+                    
+                    <div class="code-block">
+                        <pre><code class="language-python">from oiadb import MyADB
+from oiadb.commands import xml_dump
+
+# Khởi tạo ADB
+adb = MyADB()
+
+# Lấy cấu trúc XML của giao diện người dùng hiện tại
+xml_tree = xml_dump.get_ui_xml()
+
+# In ra cấu trúc XML đã định dạng
+print(xml_dump.format_xml(xml_tree))
+
+# Lưu cấu trúc XML vào file
+xml_dump.save_xml(xml_tree, "ui_dump.xml")</code></pre>
+                        <button class="copy-btn" aria-label="Copy to clipboard">
+                            <i class="far fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="xml-dump-finding-elements" class="mt-5">
+                    <h3>Tìm phần tử UI</h3>
+                    
+                    <p>OIADB cung cấp nhiều phương thức để tìm kiếm các phần tử trong cấu trúc UI dựa trên văn bản, thuộc tính hoặc vị trí.</p>
+                    
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="tab-find-by-text">Tìm theo văn bản</button>
+                        <button class="tab-btn" data-tab="tab-find-by-attribute">Tìm theo thuộc tính</button>
+                        <button class="tab-btn" data-tab="tab-find-by-position">Tìm theo vị trí</button>
+                        <button class="tab-btn" data-tab="tab-find-multiple">Tìm nhiều phần tử</button>
+                    </div>
+                    
+                    <div class="tab-content">
+                        <div id="tab-find-by-text" class="tab-pane active">
+                            <p>Tìm phần tử dựa trên văn bản hiển thị:</p>
+                            <div class="code-block">
+                                <pre><code class="language-python"># Tìm phần tử có văn bản chính xác
+element = xml_dump.find_element_by_text("Login")
+
+# Tìm phần tử có văn bản chứa chuỗi con
+element = xml_dump.find_element_by_text("Log", partial_match=True)
+
+# Tìm phần tử có văn bản không phân biệt hoa thường
+element = xml_dump.find_element_by_text("login", case_sensitive=False)
+
+if element:
+    print(f"Đã tìm thấy phần tử: {xml_dump.get_element_info(element)}")
+else:
+    print("Không tìm thấy phần tử")</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div id="tab-find-by-attribute" class="tab-pane">
+                            <p>Tìm phần tử dựa trên thuộc tính:</p>
+                            <div class="code-block">
+                                <pre><code class="language-python"># Tìm theo resource-id
+element = xml_dump.find_element_by_attribute(
+    "resource-id", 
+    "com.example.app:id/username"
+)
+
+# Tìm theo class
+element = xml_dump.find_element_by_attribute(
+    "class", 
+    "android.widget.Button"
+)
+
+# Tìm theo content-desc
+element = xml_dump.find_element_by_attribute(
+    "content-desc", 
+    "Submit button"
+)
+
+# Tìm theo nhiều thuộc tính (AND logic)
+element = xml_dump.find_element_by_attributes({
+    "class": "android.widget.Button",
+    "clickable": "true"
+})</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div id="tab-find-by-position" class="tab-pane">
+                            <p>Tìm phần tử dựa trên vị trí trên màn hình:</p>
+                            <div class="code-block">
+                                <pre><code class="language-python"># Tìm phần tử tại tọa độ cụ thể
+element = xml_dump.find_element_at_position(500, 800)
+
+if element:
+    # Lấy thông tin về phần tử
+    bounds = xml_dump.get_element_bounds(element)
+    print(f"Phần tử có kích thước: {bounds}")
+    
+    # Kiểm tra xem phần tử có thể nhấp không
+    is_clickable = xml_dump.is_element_clickable(element)
+    print(f"Có thể nhấp: {is_clickable}")</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div id="tab-find-multiple" class="tab-pane">
+                            <p>Tìm nhiều phần tử cùng một lúc:</p>
+                            <div class="code-block">
+                                <pre><code class="language-python"># Tìm tất cả các nút
+buttons = xml_dump.find_elements_by_attribute("class", "android.widget.Button")
+print(f"Đã tìm thấy {len(buttons)} nút")
+
+# Tìm tất cả các phần tử có thể nhấp
+clickable_elements = xml_dump.find_elements_by_attribute("clickable", "true")
+print(f"Đã tìm thấy {len(clickable_elements)} phần tử có thể nhấp")
+
+# Lặp qua các phần tử và in thông tin
+for i, element in enumerate(buttons):
+    text = xml_dump.get_element_text(element) or "Không có văn bản"
+    print(f"Nút {i+1}: {text}")</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="xml-dump-interaction" class="mt-5">
+                    <h3>Tương tác với phần tử</h3>
+                    
+                    <p>Sau khi tìm thấy phần tử, bạn có thể tương tác với nó thông qua các phương thức của OIADB:</p>
+                    
+                    <div class="interaction-grid">
+                        <div class="interaction-card">
+                            <div class="interaction-icon">
+                                <i class="fas fa-mouse-pointer"></i>
+                            </div>
+                            <h4>Nhấp vào phần tử</h4>
+                            <div class="code-block">
+                                <pre><code class="language-python"># Tìm và nhấp vào nút đăng nhập
+login_button = xml_dump.find_element_by_text("Login")
+if login_button:
+    xml_dump.click_element(login_button)</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="interaction-card">
+                            <div class="interaction-icon">
+                                <i class="fas fa-keyboard"></i>
+                            </div>
+                            <h4>Nhập văn bản</h4>
+                            <div class="code-block">
+                                <pre><code class="language-python"># Tìm trường nhập liệu và nhập văn bản
+username_field = xml_dump.find_element_by_attribute(
+    "resource-id", 
+    "com.example.app:id/username"
+)
+if username_field:
+    xml_dump.input_text(username_field, "user@example.com")</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="interaction-card">
+                            <div class="interaction-icon">
+                                <i class="fas fa-eraser"></i>
+                            </div>
+                            <h4>Xóa văn bản</h4>
+                            <div class="code-block">
+                                <pre><code class="language-python"># Tìm trường nhập liệu và xóa văn bản
+password_field = xml_dump.find_element_by_attribute(
+    "resource-id", 
+    "com.example.app:id/password"
+)
+if password_field:
+    xml_dump.clear_text(password_field)</code></pre>
+                            </div>
+                        </div>
+                        
+                        <div class="interaction-card">
+                            <div class="interaction-icon">
+                                <i class="fas fa-scroll"></i>
+                            </div>
+                            <h4>Cuộn đến phần tử</h4>
+                            <div class="code-block">
+                                <pre><code class="language-python"># Tìm và cuộn đến phần tử
+terms_element = xml_dump.find_element_by_text("Terms of Service")
+if terms_element:
+    xml_dump.scroll_to_element(terms_element)</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-box mt-4">
+                        <h4>Kiểm tra trạng thái phần tử</h4>
+                        <p>OIADB cung cấp các phương thức để kiểm tra trạng thái của phần tử:</p>
+                        <div class="code-block">
+                            <pre><code class="language-python"># Kiểm tra xem phần tử có được chọn không
+checkbox = xml_dump.find_element_by_attribute("class", "android.widget.CheckBox")
+if checkbox:
+    is_checked = xml_dump.is_element_checked(checkbox)
+    print(f"Checkbox đã được chọn: {is_checked}")
+
+# Kiểm tra xem phần tử có được bật không
+button = xml_dump.find_element_by_text("Submit")
+if button:
+    is_enabled = xml_dump.is_element_enabled(button)
+    print(f"Nút được bật: {is_enabled}")
+
+# Kiểm tra xem phần tử có được focus không
+input_field = xml_dump.find_element_by_attribute("focused", "true")
+if input_field:
+    print("Đã tìm thấy phần tử đang được focus")</code></pre>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="xml-dump-performance" class="mt-5">
+                    <h3>Tối ưu hiệu suất</h3>
+                    
+                    <p>Truy xuất cấu trúc XML của UI có thể tốn thời gian, đặc biệt là khi bạn cần thực hiện nhiều lần. OIADB cung cấp XML Server để cải thiện hiệu suất:</p>
+                    
+                    <div class="code-block">
+                        <pre><code class="language-python">from oiadb.commands import xml_dump
+
+# Khởi động XML Server
+server, server_thread = xml_dump.start_xml_server(port=8000)
+
+# Thiết lập port forwarding
+xml_dump.setup_port_forwarding(device_port=8000, host_port=8000)
+
+# Sử dụng XML Server để lấy cấu trúc UI (nhanh hơn)
+for i in range(10):
+    xml_tree = xml_dump.get_ui_xml_from_server()
+    # Thực hiện các thao tác với xml_tree
+    
+    # Giả lập độ trễ giữa các lần kiểm tra
+    import time
+    time.sleep(1)
+
+# Dừng XML Server khi hoàn tất
+xml_dump.stop_xml_server(server)</code></pre>
+                        <button class="copy-btn" aria-label="Copy to clipboard">
+                            <i class="far fa-copy"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="tips-box">
+                        <h4>Mẹo tối ưu hiệu suất</h4>
+                        <ul>
+                            <li>Sử dụng XML Server khi cần truy xuất cấu trúc UI nhiều lần</li>
+                            <li>Lưu trữ và tái sử dụng cấu trúc XML khi có thể</li>
+                            <li>Sử dụng các phương thức tìm kiếm cụ thể (find_element_by_attribute) thay vì duyệt qua toàn bộ cấu trúc</li>
+                            <li>Kết hợp XML Dump với nhận diện hình ảnh để xử lý các trường hợp phức tạp</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Thêm các section khác tương tự -->
+            
+            <!-- Documentation Pagination -->
+            <div class="docs-pagination">
+                <a href="api-reference.html" class="prev">
+                    <i class="fas fa-arrow-left"></i> API Reference
+                </a>
+                <a href="examples.html" class="next">
+                    Ví dụ <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>OIADB</h3>
+                    <p>Thư viện Python wrapper cho Android Debug Bridge với các tính năng nâng cao như nhận diện hình ảnh và XML dump.</p>
+                    
+                    <div class="social-links">
+                        <a href="https://github.com/tiendung102k3/oiadb" target="_blank" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://pypi.org/project/oiadb/" target="_blank" aria-label="PyPI">
+                            <i class="fab fa-python"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Tài liệu</h3>
+                    <ul>
+                        <li><a href="getting-started.html">Bắt đầu</a></li>
+                        <li><a href="features.html">Tính năng</a></li>
+                        <li><a href="api-reference.html">API Reference</a></li>
+                        <li><a href="guides.html">Hướng dẫn</a></li>
+                        <li><a href="examples.html">Ví dụ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Tài nguyên</h3>
+                    <ul>
+                        <li><a href="resources.html#changelog">Changelog</a></li>
+                        <li><a href="resources.html#license">Giấy phép</a></li>
+                        <li><a href="resources.html#faq">Câu hỏi thường gặp</a></li>
+                        <li><a href="resources.html#troubleshooting">Xử lý sự cố</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Liên kết</h3>
+                    <ul>
+                        <li><a href="https://github.com/tiendung102k3/oiadb" target="_blank">GitHub</a></li>
+                        <li><a href="https://pypi.org/project/oiadb/" target="_blank">PyPI</a></li>
+                        <li><a href="https://github.com/tiendung102k3/oiadb/issues" target="_blank">Báo cáo lỗi</a></li>
+                        <li><a href="https://github.com/tiendung102k3/oiadb/blob/main/CONTRIBUTING.md" target="_blank">Đóng góp</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 OIADB. Được phát hành dưới giấy phép MIT.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+</body>
+</html>

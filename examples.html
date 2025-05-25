@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ví dụ OIADB - Các ví dụ thực tế về cách sử dụng thư viện</title>
+    <meta name="description" content="Các ví dụ thực tế về cách sử dụng thư viện OIADB trong các kịch bản khác nhau, từ cơ bản đến nâng cao.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap">
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <a href="./" class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24">
+                    <path d="M17.6,9.48l1.84-3.18c0.16-0.31,0.04-0.69-0.26-0.85c-0.29-0.15-0.65-0.06-0.83,0.22l-1.88,3.24 c-2.86-1.21-6.08-1.21-8.94,0L5.65,5.67c-0.19-0.29-0.58-0.38-0.87-0.2C4.5,5.65,4.41,6.01,4.56,6.3L6.4,9.48 C3.3,11.25,1.28,14.44,1,18h22C22.72,14.44,20.7,11.25,17.6,9.48z M7,15.25c-0.69,0-1.25-0.56-1.25-1.25 c0-0.69,0.56-1.25,1.25-1.25S8.25,13.31,8.25,14C8.25,14.69,7.69,15.25,7,15.25z M17,15.25c-0.69,0-1.25-0.56-1.25-1.25 c0-0.69,0.56-1.25,1.25-1.25s1.25,0.56,1.25,1.25C18.25,14.69,17.69,15.25,17,15.25z"></path>
+                </svg>
+                <span class="logo-text">OIADB</span>
+            </a>
+            
+            <div class="main-nav">
+                <button class="menu-toggle" aria-label="Toggle menu">
+                    <span class="hamburger"></span>
+                </button>
+                
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="./">Trang chủ</a></li>
+                        <li><a href="getting-started.html">Bắt đầu</a></li>
+                        <li><a href="features.html">Tính năng</a></li>
+                        <li><a href="api-reference.html">API Reference</a></li>
+                        <li><a href="guides.html">Hướng dẫn</a></li>
+                        <li><a href="examples.html" class="active">Ví dụ</a></li>
+                        <li><a href="resources.html">Tài nguyên</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="theme-switch-wrapper">
+                    <label class="theme-switch" for="theme-switch">
+                        <input type="checkbox" id="theme-switch">
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="theme-label"><i class="fas fa-moon"></i></span>
+                </div>
+                
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Tìm kiếm...">
+                    <button id="search-button" aria-label="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <div id="search-results" class="search-results"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Documentation Container -->
+    <div class="container docs-container">
+        <!-- Sidebar -->
+        <aside class="docs-sidebar">
+            <div class="docs-nav">
+                <div class="docs-nav-section">
+                    <a href="#" class="docs-nav-title">Trang chủ</a>
+                    <div class="docs-nav-links">
+                        <a href="./">Quay lại trang chủ</a>
+                    </div>
+                </div>
+                
+                <div class="docs-nav-section">
+                    <a href="#basic" class="docs-nav-title">Ví dụ cơ bản</a>
+                    <div class="docs-nav-links">
+                        <a href="#basic-connection">Kết nối thiết bị</a>
+                        <a href="#basic-interaction">Tương tác cơ bản</a>
+                        <a href="#basic-app-management">Quản lý ứng dụng</a>
+                    </div>
+                </div>
+                
+                <div class="docs-nav-section">
+                    <a href="#image-recognition" class="docs-nav-title">Nhận diện hình ảnh</a>
+                    <div class="docs-nav-links">
+                        <a href="#image-recognition-simple">Tìm và nhấp hình ảnh</a>
+                        <a href="#image-recognition-wait">Đợi và nhấp hình ảnh</a>
+                        <a href="#image-recognition-game">Tự động chơi game</a>
+                    </div>
+                </div>
+                
+                <div class="docs-nav-section">
+                    <a href="#xml-dump" class="docs-nav-title">XML Dump</a>
+                    <div class="docs-nav-links">
+                        <a href="#xml-dump-form">Điền form tự động</a>
+                        <a href="#xml-dump-navigation">Điều hướng ứng dụng</a>
+                        <a href="#xml-dump-extraction">Trích xuất dữ liệu</a>
+                    </div>
+                </div>
+                
+                <div class="docs-nav-section">
+                    <a href="#advanced" class="docs-nav-title">Ví dụ nâng cao</a>
+                    <div class="docs-nav-links">
+                        <a href="#advanced-hybrid">Kết hợp nhận diện hình ảnh và XML</a>
+                        <a href="#advanced-automation">Tự động hóa ứng dụng phức tạp</a>
+                        <a href="#advanced-testing">Kiểm thử tự động</a>
+                    </div>
+                </div>
+                
+                <div class="docs-nav-section">
+                    <a href="#complete-projects" class="docs-nav-title">Dự án hoàn chỉnh</a>
+                    <div class="docs-nav-links">
+                        <a href="#complete-projects-social">Tự động hóa mạng xã hội</a>
+                        <a href="#complete-projects-game">Bot chơi game</a>
+                        <a href="#complete-projects-utility">Tiện ích Android</a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="docs-content">
+            <h1>Ví dụ OIADB</h1>
+            
+            <p class="intro-text">Trang này cung cấp các ví dụ thực tế về cách sử dụng thư viện OIADB trong các kịch bản khác nhau, từ cơ bản đến nâng cao. Mỗi ví dụ đều có mã nguồn đầy đủ và giải thích chi tiết.</p>
+            
+            <section id="basic" class="fade-in">
+                <h2>Ví dụ cơ bản</h2>
+                
+                <div id="basic-connection" class="example-block">
+                    <h3>Kết nối thiết bị</h3>
+                    
+                    <p>Ví dụ này minh họa cách kết nối với thiết bị Android và lấy thông tin cơ bản.</p>
+                    
+                    <div class="code-block">
+                        <pre><code class="language-python">from oiadb import MyADB
+
+def main():
+    # Khởi tạo với thiết bị mặc định
+    adb = MyADB()
+    
+    # Liệt kê các thiết bị đã kết nối
+    devices = adb.get_devices()
+    print(f"Các thiết bị đã kết nối: {devices}")
+    
+    # Lấy thông tin thiết bị
+    device_info = adb.get_device_info()
+    print("\nThông tin thiết bị:")
+    print(f"Model: {device_info.get('model', 'N/A')}")
+    print(f"Manufacturer: {device_info.get('manufacturer', 'N/A')}")
+    print(f"Android version: {device_info.get('android_version', 'N/A')}")
+    print(f"SDK version: {device_info.get('sdk_version', 'N/A')}")
+    print(f"Serial: {device_info.get('serial', 'N/A')}")
+    
+    # Lấy kích thước màn hình
+    width, height = adb.get_screen_size()
+    print(f"\nKích thước màn hình: {width}x{height}")
+    
+    # Kiểm tra trạng thái màn hình
+    screen_state = "Bật" if adb.is_screen_on() else "Tắt"
+    print(f"Trạng thái màn hình: {screen_state}")
+
+if __name__ == "__main__":
+    main()</code></pre>
+                        <button class="copy-btn" aria-label="Copy to clipboard">
+                            <i class="far fa-copy"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="example-output">
+                        <h4>Kết quả</h4>
+                        <pre>Các thiết bị đã kết nối: ['emulator-5554']
+
+Thông tin thiết bị:
+Model: Pixel 4
+Manufacturer: Google
+Android version: 11
+SDK version: 30
+Serial: emulator-5554
+
+Kích thước màn hình: 1080x2280
+Trạng thái màn hình: Bật</pre>
+                    </div>
+                </div>
+                
+                <div id="basic-interaction" class="example-block">
+                    <h3>Tương tác cơ bản</h3>
+                    
+                    <p>Ví dụ này minh họa các thao tác tương tác cơ bản với thiết bị Android.</p>
+                    
+                    <div class="code-block">
+                        <pre><code class="language-python">from oiadb import MyADB
+from oiadb.commands import interaction
+import time
+
+def main():
+    # Khởi tạo ADB
+    adb = MyADB()
+    
+    # Mở trình khởi chạy ứng dụng
+    interaction.home()
+    time.sleep(1)
+    
+    # Vuốt để mở ngăn thông báo
+    width, height = adb.get_screen_size()
+    interaction.swipe(width // 2, 0, width // 2, height // 2)
+    print("Đã mở ngăn thông báo")
+    time.sleep(2)
+    
+    # Đóng ngăn thông báo
+    interaction.back()
+    print("Đã đóng ngăn thông báo")
+    time.sleep(1)
+    
+    # Mở ứng dụng gần đây
+    interaction.recent_apps()
+    print("Đã mở ứng dụng gần đây")
+    time.sleep(2)
+    
+    # Vuốt để đóng ứng dụng đầu tiên
+    interaction.swipe(width // 2, height // 2, width // 2, 0)
+    print("Đã vuốt để đóng ứng dụng")
+    time.sleep(1)
+    
+    # Quay lại màn hình chính
+    interaction.home()
+    print("Đã quay lại màn hình chính")
+
+if __name__ == "__main__":
+    main()</code></pre>
+                        <button class="copy-btn" aria-label="Copy to clipboard">
+                            <i class="far fa-copy"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="example-output">
+                        <h4>Kết quả</h4>
+                        <pre>Đã mở ngăn thông báo
+Đã đóng ngăn thông báo
+Đã mở ứng dụng gần đây
+Đã vuốt để đóng ứng dụng
+Đã quay lại màn hình chính</pre>
+                    </div>
+                </div>
+                
+                <div id="basic-app-management" class="example-block">
+                    <h3>Quản lý ứng dụng</h3>
+                    
+                    <p>Ví dụ này minh họa cách cài đặt, khởi động và gỡ cài đặt ứng dụng.</p>
+                    
+                    <div class="code-block">
+                        <pre><code class="language-python">from oiadb import MyADB
+from oiadb.commands import apps
+import time
+
+def main():
+    # Khởi tạo ADB
+    adb = MyADB()
+    
+    # Đường dẫn đến file APK (thay thế bằng đường dẫn thực tế)
+    apk_path = "/path/to/example.apk"
+    package_name = "com.example.app"
+    
+    # Cài đặt ứng dụng
+    print(f"Đang cài đặt {apk_path}...")
+    result = apps.install_app(apk_path)
+    if result:
+        print("Cài đặt thành công")
+    else:
+        print("Cài đặt thất bại")
+        return
+    
+    # Lấy danh sách ứng dụng đã cài đặt
+    installed_apps = apps.get_installed_apps()
+    print(f"\nSố lượng ứng dụng đã cài đặt: {len(installed_apps)}")
+    
+    # Kiểm tra xem ứng dụng đã được cài đặt chưa
+    if package_name in installed_apps:
+        print(f"{package_name} đã được cài đặt")
+    
+    # Khởi động ứng dụng
+    print(f"\nĐang khởi động {package_name}...")
+    apps.start_app(package_name)
+    print("Ứng dụng đã được khởi động")
+    time.sleep(3)
+    
+    # Lấy danh sách ứng dụng đang chạy
+    running_apps = apps.get_running_apps()
+    print(f"\nSố lượng ứng dụng đang chạy: {len(running_apps)}")
+    
+    # Dừng ứng dụng
+    print(f"\nĐang dừng {package_name}...")
+    apps.stop_app(package_name)
+    print("Ứng dụng đã được dừng")
+    time.sleep(1)
+    
+    # Xóa dữ liệu ứng dụng
+    print(f"\nĐang xóa dữ liệu của {package_name}...")
+    apps.clear_app_data(package_name)
+    print("Dữ liệu ứng dụng đã được xóa")
+    
+    # Gỡ cài đặt ứng dụng
+    print(f"\nĐang gỡ cài đặt {package_name}...")
+    result = apps.uninstall_app(package_name)
+    if result:
+        print("Gỡ cài đặt thành công")
+    else:
+        print("Gỡ cài đặt thất bại")
+
+if __name__ == "__main__":
+    main()</code></pre>
+                        <button class="copy-btn" aria-label="Copy to clipboard">
+                            <i class="far fa-copy"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="example-output">
+                        <h4>Kết quả</h4>
+                        <pre>Đang cài đặt /path/to/example.apk...
+Cài đặt thành công
+
+Số lượng ứng dụng đã cài đặt: 42
+com.example.app đã được cài đặt
+
+Đang khởi động com.example.app...
+Ứng dụng đã được khởi động
+
+Số lượng ứng dụng đang chạy: 8
+
+Đang dừng com.example.app...
+Ứng dụng đã được dừng
+
+Đang xóa dữ liệu của com.example.app...
+Dữ liệu ứng dụng đã được xóa
+
+Đang gỡ cài đặt com.example.app...
+Gỡ cài đặt thành công</pre>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="image-recognition" class="fade-in">
+                <h2>Nhận diện hình ảnh</h2>
+                
+                <div id="image-recognition-simple" class="example-block">
+                    <h3>Tìm và nhấp hình ảnh</h3>
+                    
+                    <p>Ví dụ này minh họa cách tìm và nhấp vào hình ảnh trên màn hình.</p>
+                    
+                    <div class="code-block">
+                        <pre><code class="language-python">from oiadb import MyADB
+from oiadb.commands import image_interaction
+import time
+
+def main():
+    # Khởi tạo ADB
+    adb = MyADB()
+    
+    # Đường dẫn đến hình ảnh mẫu
+    settings_icon = "templates/settings_icon.png"
+    wifi_button = "templates/wifi_button.png"
+    back_button = "templates/back_button.png"
+    
+    # Mở màn hình chính
+    adb.execute_command("shell input keyevent KEYCODE_HOME")
+    time.sleep(1)
+    
+    # Tìm và nhấp vào biểu tượng Cài đặt
+    print("Đang tìm biểu tượng Cài đặt...")
+    result = image_interaction.tap_image(settings_icon, threshold=0.8)
+    if result:
+        print("Đã nhấp vào biểu tượng Cài đặt")
+    else:
+        print("Không tìm thấy biểu tượng Cài đặt")
+        return
+    
+    time.sleep(2)
+    
+    # Tìm và nhấp vào nút Wi-Fi
+    print("\nĐang tìm nút Wi-Fi...")
+    result = image_interaction.tap_image(wifi_button, threshold=0.8)
+    if result:
+        print("Đã nhấp vào nút Wi-Fi")
+    else:
+        print("Không tìm thấy nút Wi-Fi")
+    
+    time.sleep(2)
+    
+    # Tìm và nhấp vào nút Quay lại
+    print("\nĐang tìm nút Quay lại...")
+    result = image_interaction.tap_image(back_button, threshold=0.8)
+    if result:
+        print("Đã nhấp vào nút Quay lại")
+    else:
+        print("Không tìm thấy nút Quay lại")
+    
+    time.sleep(1)
+    
+    # Quay lại màn hình chính
+    adb.execute_command("shell input keyevent KEYCODE_HOME")
+    print("\nĐã quay lại màn hình chính")
+
+if __name__ == "__main__":
+    main()</code></pre>
+                        <button class="copy-btn" aria-label="Copy to clipboard">
+                            <i class="far fa-copy"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="example-output">
+                        <h4>Kết quả</h4>
+                        <pre>Đang tìm biểu tượng Cài đặt...
+Đã nhấp vào biểu tượng Cài đặt
+
+Đang tìm nút Wi-Fi...
+Đã nhấp vào nút Wi-Fi
+
+Đang tìm nút Quay lại...
+Đã nhấp vào nút Quay lại
+
+Đã quay lại màn hình chính</pre>
+                    </div>
+                </div>
+                
+                <div id="image-recognition-wait" class="example-block">
+                    <h3>Đợi và nhấp hình ảnh</h3>
+                    
+                    <p>Ví dụ này minh họa cách đợi hình ảnh xuất hiện trên màn hình và nhấp vào nó.</p>
+                    
+                    <div class="code-block">
+                        <pre><code class="language-python">from oiadb import MyADB
+from oiadb.commands import image_interaction, apps
+import time
+
+def main():
+    # Khởi tạo ADB
+    adb = MyADB()
+    
+    # Đường dẫn đến hình ảnh mẫu
+    app_icon = "templates/app_icon.png"
+    accept_button = "templates/accept_button.png"
+    skip_button = "templates/skip_button.png"
+    
+    # Mở màn hình chính
+    adb.execute_command("shell input keyevent KEYCODE_HOME")
+    time.sleep(1)
+    
+    # Tìm và nhấp vào biểu tượng ứng dụng
+    print("Đang tìm biểu tượng ứng dụng...")
+    result = image_interaction.tap_image(app_icon, threshold=0.8)
+    if not result:
+        print("Không tìm thấy biểu tượng ứng dụng")
+        return
+    
+    print("Đã nhấp vào biểu tượng ứng dụng")
+    
+    # Đợi và nhấp vào nút Chấp nhận (tối đa 10 giây)
+    print("\nĐang đợi nút Chấp nhận xuất hiện (tối đa 10 giây)...")
+    result = image_interaction.wait_and_tap_image(
+        accept_button,
+        timeout=10,      # Thời gian tối đa đợi (giây)
+        interval=0.5,    # Khoảng thời gian giữa các lần tìm kiếm (giây)
+        threshold=0.8    # Ngưỡng tương đồng
+    )
+    
+    if result:
+        print("Đã nhấp vào nút Chấp nhận")
+    else:
+        print("Không tìm thấy nút Chấp nhận trong thời gian chờ")
+    
+    # Đợi và nhấp vào nút Bỏ qua (tối đa 5 giây)
+    print("\nĐang đợi nút Bỏ qua xuất hiện (tối đa 5 giây)...")
+    result = image_interaction.wait_and_tap_image(
+        skip_button,
+        timeout=5,
+        interval=0.5,
+        threshold=0.8
+    )
+    
+    if result:
+        print("Đã nhấp vào nút Bỏ qua")
+    else:
+        print("Không tìm thấy nút Bỏ qua trong thời gian chờ")
+    
+    # Đợi 3 giây để xem kết quả
+    time.sleep(3)
+    
+    # Dừng ứng dụng
+    apps.stop_app("com.example.app")
+    print("\nĐã dừng ứng dụng")
+
+if __name__ == "__main__":
+    main()</code></pre>
+                        <button class="copy-btn" aria-label="Copy to clipboard">
+                            <i class="far fa-copy"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="example-output">
+                        <h4>Kết quả</h4>
+                        <pre>Đang tìm biểu tượng ứng dụng...
+Đã nhấp vào biểu tượng ứng dụng
+
+Đang đợi nút Chấp nhận xuất hiện (tối đa 10 giây)...
+Đã nhấp vào nút Chấp nhận
+
+Đang đợi nút Bỏ qua xuất hiện (tối đa 5 giây)...
+Đã nhấp vào nút Bỏ qua
+
+Đã dừng ứng dụng</pre>
+                    </div>
+                </div>
+                
+                <div id="image-recognition-game" class="example-block">
+                    <h3>Tự động chơi game</h3>
+                    
+                    <p>Ví dụ này minh họa cách sử dụng nhận diện hình ảnh để tự động chơi một trò chơi đơn giản.</p>
+                    
+                    <div class="code-block">
+                        <pre><code class="language-python">from oiadb import MyADB
+from oiadb.commands import image_interaction, apps
+import time
+import random
+
+def main():
+    # Khởi tạo ADB
+    adb = MyADB()
+    
+    # Đường dẫn đến hình ảnh mẫu
+    game_icon = "templates/game_icon.png"
+    play_button = "templates/play_button.png"
+    target_icon = "templates/target_icon.png"
+    retry_button = "templates/retry_button.png"
+    
+    # Mở màn hình chính
+    adb.execute_command("shell input keyevent KEYCODE_HOME")
+    time.sleep(1)
+    
+    # Khởi động trò chơi
+    print("Đang khởi động trò chơi...")
+    result = image_interaction.tap_image(game_icon, threshold=0.8)
+    if not result:
+        print("Không tìm thấy biểu tượng trò chơi")
+        return
+    
+    # Đợi và nhấp vào nút Chơi
+    print("\nĐang đợi nút Chơi xuất hiện...")
+    result = image_interaction.wait_and_tap_image(
+        play_button,
+        timeout=10,
+        interval=0.5,
+        threshold=0.8
+    )
+    
+    if not result:
+        print("Không tìm thấy nút Chơi")
+        return
+    
+    print("Đã bắt đầu trò chơi")
+    
+    # Chơi trong 60 giây
+    print("\nĐang chơi trò chơi trong 60 giây...")
+    start_time = time.time()
+    targets_clicked = 0
+    
+    while time.time() - start_time < 60:
+        # Tìm tất cả các mục tiêu trên màn hình
+        results = image_interaction.find_all_images(
+            target_icon,
+            threshold=0.8,
+            max_results=5  # Tìm tối đa 5 mục tiêu cùng một lúc
+        )
+        
+        if results:
+            # Nhấp vào mục tiêu ngẫu nhiên
+            target = random.choice(results)
+            x, y, confidence = target
+            image_interaction.tap(x, y)
+            targets_clicked += 1
+            print(f"Đã nhấp vào mục tiêu #{targets_clicked} tại ({x}, {y})")
+            time.sleep(0.2)  # Đợi một chút giữa các lần nhấp
+        else:
+            # Kiểm tra xem trò chơi có kết thúc không
+            if image_interaction.is_image_present(retry_button, threshold=0.8):
+                print("\nTrò chơi đã kết thúc, đang bắt đầu lại...")
+                image_interaction.tap_image(retry_button)
+                time.sleep(1)
+            
+            time.sleep(0.1)  # Đợi một chút trước khi tìm kiếm lại
+    
+    print(f"\nĐã kết thúc. Tổng số mục tiêu đã nhấp: {targets_clicked}")
+    
+    # Dừng trò chơi
+    apps.stop_app("com.example.game")
+    print("Đã dừng trò chơi")
+
+if __name__ == "__main__":
+    main()</code></pre>
+                        <button class="copy-btn" aria-label="Copy to clipboard">
+                            <i class="far fa-copy"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="example-output">
+                        <h4>Kết quả</h4>
+                        <pre>Đang khởi động trò chơi...
+
+Đang đợi nút Chơi xuất hiện...
+Đã bắt đầu trò chơi
+
+Đang chơi trò chơi trong 60 giây...
+Đã nhấp vào mục tiêu #1 tại (523, 782)
+Đã nhấp vào mục tiêu #2 tại (245, 631)
+Đã nhấp vào mục tiêu #3 tại (867, 412)
+...
+Đã nhấp vào mục tiêu #42 tại (512, 689)
+
+Trò chơi đã kết thúc, đang bắt đầu lại...
+Đã nhấp vào mục tiêu #43 tại (356, 721)
+...
+Đã nhấp vào mục tiêu #87 tại (678, 543)
+
+Đã kết thúc. Tổng số mục tiêu đã nhấp: 87
+Đã dừng trò chơi</pre>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="xml-dump" class="fade-in">
+                <h2>XML Dump</h2>
+                
+                <div id="xml-dump-form" class="example-block">
+                    <h3>Điền form tự động</h3>
+                    
+                    <p>Ví dụ này minh họa cách sử dụng XML Dump để điền form tự động.</p>
+                    
+                    <div class="code-block">
+                        <pre><code class="language-python">from oiadb import MyADB
+from oiadb.commands import xml_dump, apps
+import time
+
+def main():
+    # Khởi tạo ADB
+    adb = MyADB()
+    
+    # Khởi động ứng dụng
+    print("Đang khởi động ứng dụng...")
+    apps.start_app("com.example.form")
+    time.sleep(2)
+    
+    # Lấy cấu trúc XML của giao diện người dùng
+    print("\nĐang lấy cấu trúc UI...")
+    xml_tree = xml_dump.get_ui_xml()
+    
+    # Tìm và điền vào trường Tên
+    print("\nĐang điền form...")
+    name_field = xml_dump.find_element_by_attribute("hint", "Tên")
+    if name_field:
+        xml_dump.click_element(name_field)
+        xml_dump.input_text(name_field, "Nguyễn Văn A")
+        print("Đã điền trường Tên")
+    else:
+        print("Không tìm thấy trường Tên")
+    
+    # Cập nhật cấu trúc XML sau khi tương tác
+    xml_tree = xml_dump.get_ui_xml()
+    
+    # Tìm và điền vào trường Email
+    email_field = xml_dump.find_element_by_attribute("hint", "Email")
+    if email_field:
+        xml_dump.click_element(email_field)
+        xml_dump.input_text(email_field, "nguyenvana@example.com")
+        print("Đã điền trường Email")
+    else:
+        print("Không tìm thấy trường Email")
+    
+    # Cập nhật cấu trúc XML sau khi tương tác
+    xml_tree = xml_dump.get_ui_xml()
+    
+    # Tìm và điền vào trường Số điện thoại
+    phone_field = xml_dump.find_element_by_attribute("hint", "Số điện thoại")
+    if phone_field:
+        xml_dump.click_element(phone_field)
+        xml_dump.input_text(phone_field, "0123456789")
+        print("Đã điền trường Số điện thoại")
+    else:
+        print("Không tìm thấy trường Số điện thoại")
+    
+    # Cập nhật cấu trúc XML sau khi tương tác
+    xml_tree = xml_dump.get_ui_xml()
+    
+    # Tìm và nhấp vào nút Gửi
+    submit_button = xml_dump.find_element_by_text("Gửi")
+    if submit_button:
+        xml_dump.click_element(submit_button)
+        print("Đã nhấp vào nút Gửi")
+    else:
+        print("Không tìm thấy nút Gửi")
+    
+    # Đợi thông báo xác nhận
+    time.sleep(2)
+    xml_tree = xml_dump.get_ui_xml()
+    
+    # Kiểm tra xem form đã được gửi thành công chưa
+    success_message = xml_dump.find_element_by_text("Gửi thành công")
+    if success_message:
+        print("\nForm đã được gửi thành công!")
+    else:
+        print("\nKhông tìm thấy thông báo xác nhận")
+    
+    # Dừng ứng dụng
+    time.sleep(2)
+    apps.stop_app("com.example.form")
+    print("Đã dừng ứng dụng")
+
+if __name__ == "__main__":
+    main()</code></pre>
+                        <button class="copy-btn" aria-label="Copy to clipboard">
+                            <i class="far fa-copy"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="example-output">
+                        <h4>Kết quả</h4>
+                        <pre>Đang khởi động ứng dụng...
+
+Đang lấy cấu trúc UI...
+
+Đang điền form...
+Đã điền trường Tên
+Đã điền trường Email
+Đã điền trường Số điện thoại
+Đã nhấp vào nút Gửi
+
+Form đã được gửi thành công!
+Đã dừng ứng dụng</pre>
+                    </div>
+                </div>
+                
+                <!-- Thêm các ví dụ khác tương tự -->
+                
+            </section>
+            
+            <!-- Thêm các section khác tương tự -->
+            
+            <!-- Documentation Pagination -->
+            <div class="docs-pagination">
+                <a href="guides.html" class="prev">
+                    <i class="fas fa-arrow-left"></i> Hướng dẫn
+                </a>
+                <a href="resources.html" class="next">
+                    Tài nguyên <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>OIADB</h3>
+                    <p>Thư viện Python wrapper cho Android Debug Bridge với các tính năng nâng cao như nhận diện hình ảnh và XML dump.</p>
+                    
+                    <div class="social-links">
+                        <a href="https://github.com/tiendung102k3/oiadb" target="_blank" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://pypi.org/project/oiadb/" target="_blank" aria-label="PyPI">
+                            <i class="fab fa-python"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Tài liệu</h3>
+                    <ul>
+                        <li><a href="getting-started.html">Bắt đầu</a></li>
+                        <li><a href="features.html">Tính năng</a></li>
+                        <li><a href="api-reference.html">API Reference</a></li>
+                        <li><a href="guides.html">Hướng dẫn</a></li>
+                        <li><a href="examples.html">Ví dụ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Tài nguyên</h3>
+                    <ul>
+                        <li><a href="resources.html#changelog">Changelog</a></li>
+                        <li><a href="resources.html#license">Giấy phép</a></li>
+                        <li><a href="resources.html#faq">Câu hỏi thường gặp</a></li>
+                        <li><a href="resources.html#troubleshooting">Xử lý sự cố</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Liên kết</h3>
+                    <ul>
+                        <li><a href="https://github.com/tiendung102k3/oiadb" target="_blank">GitHub</a></li>
+                        <li><a href="https://pypi.org/project/oiadb/" target="_blank">PyPI</a></li>
+                        <li><a href="https://github.com/tiendung102k3/oiadb/issues" target="_blank">Báo cáo lỗi</a></li>
+                        <li><a href="https://github.com/tiendung102k3/oiadb/blob/main/CONTRIBUTING.md" target="_blank">Đóng góp</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 OIADB. Được phát hành dưới giấy phép MIT.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+</body>
+</html>

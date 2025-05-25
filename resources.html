@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tài nguyên OIADB - Changelog, Giấy phép, FAQ và Xử lý sự cố</title>
+    <meta name="description" content="Các tài nguyên bổ sung cho thư viện OIADB, bao gồm nhật ký thay đổi, thông tin giấy phép, câu hỏi thường gặp và hướng dẫn xử lý sự cố.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap">
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <a href="./" class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24">
+                    <path d="M17.6,9.48l1.84-3.18c0.16-0.31,0.04-0.69-0.26-0.85c-0.29-0.15-0.65-0.06-0.83,0.22l-1.88,3.24 c-2.86-1.21-6.08-1.21-8.94,0L5.65,5.67c-0.19-0.29-0.58-0.38-0.87-0.2C4.5,5.65,4.41,6.01,4.56,6.3L6.4,9.48 C3.3,11.25,1.28,14.44,1,18h22C22.72,14.44,20.7,11.25,17.6,9.48z M7,15.25c-0.69,0-1.25-0.56-1.25-1.25 c0-0.69,0.56-1.25,1.25-1.25S8.25,13.31,8.25,14C8.25,14.69,7.69,15.25,7,15.25z M17,15.25c-0.69,0-1.25-0.56-1.25-1.25 c0-0.69,0.56-1.25,1.25-1.25s1.25,0.56,1.25,1.25C18.25,14.69,17.69,15.25,17,15.25z"></path>
+                </svg>
+                <span class="logo-text">OIADB</span>
+            </a>
+            
+            <div class="main-nav">
+                <button class="menu-toggle" aria-label="Toggle menu">
+                    <span class="hamburger"></span>
+                </button>
+                
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="./">Trang chủ</a></li>
+                        <li><a href="getting-started.html">Bắt đầu</a></li>
+                        <li><a href="features.html">Tính năng</a></li>
+                        <li><a href="api-reference.html">API Reference</a></li>
+                        <li><a href="guides.html">Hướng dẫn</a></li>
+                        <li><a href="examples.html">Ví dụ</a></li>
+                        <li><a href="resources.html" class="active">Tài nguyên</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="theme-switch-wrapper">
+                    <label class="theme-switch" for="theme-switch">
+                        <input type="checkbox" id="theme-switch">
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="theme-label"><i class="fas fa-moon"></i></span>
+                </div>
+                
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Tìm kiếm...">
+                    <button id="search-button" aria-label="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <div id="search-results" class="search-results"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Documentation Container -->
+    <div class="container docs-container">
+        <!-- Sidebar -->
+        <aside class="docs-sidebar">
+            <div class="docs-nav">
+                <div class="docs-nav-section">
+                    <a href="#" class="docs-nav-title">Trang chủ</a>
+                    <div class="docs-nav-links">
+                        <a href="./">Quay lại trang chủ</a>
+                    </div>
+                </div>
+                
+                <div class="docs-nav-section">
+                    <a href="#changelog" class="docs-nav-title">Changelog</a>
+                    <div class="docs-nav-links">
+                        <a href="#changelog-latest">Phiên bản mới nhất</a>
+                        <a href="#changelog-history">Lịch sử phiên bản</a>
+                    </div>
+                </div>
+                
+                <div class="docs-nav-section">
+                    <a href="#license" class="docs-nav-title">Giấy phép</a>
+                    <div class="docs-nav-links">
+                        <a href="#license-summary">Tóm tắt giấy phép</a>
+                        <a href="#license-full">Toàn văn giấy phép</a>
+                    </div>
+                </div>
+                
+                <div class="docs-nav-section">
+                    <a href="#faq" class="docs-nav-title">Câu hỏi thường gặp</a>
+                    <div class="docs-nav-links">
+                        <a href="#faq-general">Câu hỏi chung</a>
+                        <a href="#faq-image">Nhận diện hình ảnh</a>
+                        <a href="#faq-xml">XML Dump</a>
+                        <a href="#faq-troubleshooting">Xử lý sự cố</a>
+                    </div>
+                </div>
+                
+                <div class="docs-nav-section">
+                    <a href="#troubleshooting" class="docs-nav-title">Xử lý sự cố</a>
+                    <div class="docs-nav-links">
+                        <a href="#troubleshooting-connection">Lỗi kết nối</a>
+                        <a href="#troubleshooting-image">Lỗi nhận diện hình ảnh</a>
+                        <a href="#troubleshooting-xml">Lỗi XML Dump</a>
+                        <a href="#troubleshooting-performance">Vấn đề hiệu suất</a>
+                        <a href="#troubleshooting-reporting">Báo cáo lỗi</a>
+                    </div>
+                </div>
+                
+                <div class="docs-nav-section">
+                    <a href="#contributing" class="docs-nav-title">Đóng góp</a>
+                    <div class="docs-nav-links">
+                        <a href="#contributing-guidelines">Hướng dẫn đóng góp</a>
+                        <a href="#contributing-code">Đóng góp mã nguồn</a>
+                        <a href="#contributing-docs">Đóng góp tài liệu</a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="docs-content">
+            <h1>Tài nguyên OIADB</h1>
+            
+            <p class="intro-text">Trang này cung cấp các tài nguyên bổ sung cho thư viện OIADB, bao gồm nhật ký thay đổi, thông tin giấy phép, câu hỏi thường gặp và hướng dẫn xử lý sự cố.</p>
+            
+            <section id="changelog" class="fade-in">
+                <h2>Changelog</h2>
+                
+                <div id="changelog-latest">
+                    <h3>Phiên bản mới nhất: 0.6.0 (2025-05-24)</h3>
+                    
+                    <div class="changelog-entry">
+                        <h4><i class="fas fa-plus-circle"></i> Tính năng mới</h4>
+                        <ul>
+                            <li>Thêm hỗ trợ XML Server để tăng tốc độ truy xuất UI</li>
+                            <li>Thêm các phương thức tương tác XML mới: <code>clear_text</code>, <code>scroll_to_element</code></li>
+                            <li>Thêm các phương thức kiểm tra trạng thái phần tử XML: <code>is_element_checked</code>, <code>is_element_enabled</code>, <code>is_element_focused</code></li>
+                            <li>Thêm tùy chọn tìm kiếm đa tỷ lệ và góc xoay cho nhận diện hình ảnh</li>
+                            <li>Thêm tùy chọn sử dụng phát hiện cạnh Canny cho nhận diện hình ảnh</li>
+                            <li>Thêm phương thức <code>find_all_images</code> để tìm nhiều hình ảnh cùng lúc</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="changelog-entry">
+                        <h4><i class="fas fa-wrench"></i> Cải tiến</h4>
+                        <ul>
+                            <li>Cải thiện độ chính xác và hiệu suất của nhận diện hình ảnh</li>
+                            <li>Tối ưu hóa tốc độ thực thi lệnh ADB</li>
+                            <li>Cải thiện xử lý lỗi và thông báo lỗi</li>
+                            <li>Cập nhật tài liệu và ví dụ</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="changelog-entry">
+                        <h4><i class="fas fa-bug"></i> Sửa lỗi</h4>
+                        <ul>
+                            <li>Sửa lỗi không tìm thấy ADB trên một số hệ thống</li>
+                            <li>Sửa lỗi liên quan đến xử lý đường dẫn file trên Windows</li>
+                            <li>Sửa lỗi tương tác với các phần tử UI đặc biệt</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div id="changelog-history" class="mt-5">
+                    <h3>Lịch sử phiên bản</h3>
+                    
+                    <div class="accordion">
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <h4>Phiên bản 0.5.0 (2025-04-15)</h4>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <ul>
+                                    <li>Thêm module XML Dump để tương tác với UI qua API trợ năng</li>
+                                    <li>Thêm các phương thức tìm kiếm và tương tác cơ bản với XML</li>
+                                    <li>Cải thiện module quản lý ứng dụng</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <h4>Phiên bản 0.4.0 (2025-03-10)</h4>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <ul>
+                                    <li>Thêm module nhận diện hình ảnh (Image Interaction)</li>
+                                    <li>Thêm các phương thức tìm, nhấp và đợi hình ảnh</li>
+                                    <li>Cải thiện module tương tác cơ bản (Interaction)</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <h4>Phiên bản 0.3.0 (2025-02-01)</h4>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <ul>
+                                    <li>Thêm module quản lý ứng dụng (Apps)</li>
+                                    <li>Thêm module kết nối mạng (Connect)</li>
+                                    <li>Tái cấu trúc dự án</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <h4>Phiên bản 0.2.0 (2025-01-05)</h4>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <ul>
+                                    <li>Thêm module tương tác cơ bản (Interaction)</li>
+                                    <li>Cải thiện lớp MyADB</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <h4>Phiên bản 0.1.0 (2024-12-15)</h4>
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="accordion-content">
+                                <ul>
+                                    <li>Phiên bản đầu tiên</li>
+                                    <li>Lớp MyADB cơ bản để thực thi lệnh ADB</li>
+                                    <li>Tự động cài đặt ADB</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="license" class="fade-in">
+                <h2>Giấy phép</h2>
+                
+                <div id="license-summary">
+                    <h3>Tóm tắt giấy phép: MIT License</h3>
+                    
+                    <p>OIADB được phát hành dưới giấy phép MIT. Giấy phép này rất linh hoạt và cho phép bạn:</p>
+                    
+                    <ul class="license-summary-list">
+                        <li><i class="fas fa-check-circle"></i> Sử dụng thư viện miễn phí cho mục đích thương mại và phi thương mại.</li>
+                        <li><i class="fas fa-check-circle"></i> Sửa đổi mã nguồn của thư viện.</li>
+                        <li><i class="fas fa-check-circle"></i> Phân phối lại thư viện (bao gồm cả bản gốc và bản đã sửa đổi).</li>
+                        <li><i class="fas fa-check-circle"></i> Sử dụng thư viện trong các dự án riêng tư.</li>
+                    </ul>
+                    
+                    <p>Yêu cầu duy nhất là bạn phải bao gồm bản quyền gốc và nội dung giấy phép MIT trong bất kỳ bản sao hoặc phần quan trọng nào của phần mềm.</p>
+                    
+                    <div class="info-box">
+                        <h4>Miễn trừ trách nhiệm</h4>
+                        <p>Phần mềm được cung cấp "NGUYÊN TRẠNG", không có bất kỳ bảo đảm nào, dù rõ ràng hay ngụ ý. Tác giả không chịu trách nhiệm pháp lý cho bất kỳ khiếu nại, thiệt hại hoặc trách nhiệm pháp lý nào khác phát sinh từ việc sử dụng phần mềm.</p>
+                    </div>
+                </div>
+                
+                <div id="license-full" class="mt-5">
+                    <h3>Toàn văn giấy phép MIT</h3>
+                    
+                    <div class="code-block">
+                        <pre><code class="language-plaintext">MIT License
+
+Copyright (c) 2025 Tien Dung (tiendung102k3)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</code></pre>
+                        <button class="copy-btn" aria-label="Copy to clipboard">
+                            <i class="far fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="faq" class="fade-in">
+                <h2>Câu hỏi thường gặp (FAQ)</h2>
+                
+                <div class="accordion">
+                    <div class="accordion-item" id="faq-general">
+                        <div class="accordion-header">
+                            <h4>OIADB là gì?</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>OIADB là một thư viện Python đóng gói (wrapper) cho Android Debug Bridge (ADB). Nó cung cấp một giao diện Pythonic để tương tác với các thiết bị Android, bao gồm các tính năng nâng cao như nhận diện hình ảnh và tương tác qua XML Dump (API trợ năng).</p>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h4>OIADB có miễn phí không?</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Có, OIADB được phát hành dưới giấy phép MIT, cho phép sử dụng miễn phí cho cả mục đích cá nhân và thương mại.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h4>Tôi cần cài đặt gì để sử dụng OIADB?</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Bạn cần cài đặt Python (phiên bản 3.7 trở lên). OIADB sẽ tự động tải xuống và cài đặt ADB nếu cần thiết. Bạn cũng cần bật chế độ USB Debugging trên thiết bị Android của mình.</p>
+                            <p>Để sử dụng tính năng nhận diện hình ảnh, bạn cần cài đặt OpenCV:</p>
+                            <div class="code-block">
+                                <pre><code class="language-bash">pip install opencv-python</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item" id="faq-image">
+                        <div class="accordion-header">
+                            <h4>Nhận diện hình ảnh hoạt động như thế nào?</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>OIADB chụp ảnh màn hình thiết bị và sử dụng thuật toán so khớp mẫu của OpenCV để tìm kiếm hình ảnh mẫu bạn cung cấp. Nó trả về tọa độ và độ tương đồng nếu tìm thấy.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h4>Làm thế nào để cải thiện độ chính xác của nhận diện hình ảnh?</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Sử dụng hình ảnh mẫu rõ ràng, cắt chính xác, có độ tương phản tốt. Điều chỉnh ngưỡng tương đồng (threshold). Thử sử dụng tìm kiếm đa tỷ lệ, góc xoay hoặc phát hiện cạnh Canny nếu cần.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item" id="faq-xml">
+                        <div class="accordion-header">
+                            <h4>XML Dump là gì?</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>XML Dump là quá trình truy xuất cấu trúc giao diện người dùng (UI) của ứng dụng Android dưới dạng file XML. File này chứa thông tin về tất cả các phần tử trên màn hình, cho phép bạn tương tác với chúng thông qua API trợ năng.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h4>Khi nào nên sử dụng XML Dump thay vì nhận diện hình ảnh?</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>XML Dump thường ổn định và nhanh hơn nhận diện hình ảnh, đặc biệt khi UI không thay đổi thường xuyên. Nó phù hợp để điền form, điều hướng ứng dụng và trích xuất dữ liệu văn bản. Nhận diện hình ảnh phù hợp hơn cho các phần tử đồ họa, game hoặc khi cấu trúc UI thay đổi động.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item" id="faq-troubleshooting">
+                        <div class="accordion-header">
+                            <h4>Thiết bị của tôi không được nhận diện?</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Đảm bảo bạn đã bật USB Debugging trên thiết bị và cấp quyền cho máy tính. Kiểm tra cáp USB và cổng kết nối. Thử chạy lệnh <code>adb devices</code> trong terminal để xem thiết bị có được liệt kê không.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="accordion-item">
+                        <div class="accordion-header">
+                            <h4>Làm thế nào để báo cáo lỗi hoặc yêu cầu tính năng mới?</h4>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="accordion-content">
+                            <p>Bạn có thể tạo một issue trên <a href="https://github.com/tiendung102k3/oiadb/issues" target="_blank">trang GitHub của dự án</a>. Vui lòng cung cấp mô tả chi tiết về lỗi hoặc tính năng bạn mong muốn.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="troubleshooting" class="fade-in">
+                <h2>Xử lý sự cố</h2>
+                
+                <p>Dưới đây là một số vấn đề phổ biến và cách khắc phục khi sử dụng OIADB.</p>
+                
+                <div id="troubleshooting-connection">
+                    <h3>Lỗi kết nối thiết bị</h3>
+                    
+                    <div class="troubleshooting-grid">
+                        <div class="troubleshooting-item">
+                            <div class="problem">
+                                <h4>Thiết bị không được liệt kê (adb devices)</h4>
+                            </div>
+                            <div class="solution">
+                                <ul>
+                                    <li>Kiểm tra xem USB Debugging đã được bật trên thiết bị chưa (Settings > Developer options).</li>
+                                    <li>Kiểm tra cáp USB và cổng kết nối.</li>
+                                    <li>Cấp quyền gỡ lỗi USB cho máy tính trên thiết bị (thường có thông báo pop-up khi kết nối lần đầu).</li>
+                                    <li>Cài đặt driver ADB phù hợp cho thiết bị của bạn trên máy tính.</li>
+                                    <li>Thử khởi động lại thiết bị và máy tính.</li>
+                                    <li>Chạy <code>adb kill-server</code> và <code>adb start-server</code> trong terminal.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="troubleshooting-item">
+                            <div class="problem">
+                                <h4>Thiết bị hiển thị là "unauthorized"</h4>
+                            </div>
+                            <div class="solution">
+                                <ul>
+                                    <li>Rút cáp USB và cắm lại.</li>
+                                    <li>Trên thiết bị, thu hồi quyền gỡ lỗi USB (Revoke USB debugging authorizations) trong Developer options và cấp lại quyền.</li>
+                                    <li>Xóa file <code>adbkey</code> và <code>adbkey.pub</code> trong thư mục <code>.android</code> của người dùng trên máy tính và thử kết nối lại.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="troubleshooting-image" class="mt-5">
+                    <h3>Lỗi nhận diện hình ảnh</h3>
+                    
+                    <div class="troubleshooting-grid">
+                        <div class="troubleshooting-item">
+                            <div class="problem">
+                                <h4>Không tìm thấy hình ảnh (find_image trả về None)</h4>
+                            </div>
+                            <div class="solution">
+                                <ul>
+                                    <li>Giảm ngưỡng tương đồng (threshold).</li>
+                                    <li>Đảm bảo hình ảnh mẫu được chụp từ cùng độ phân giải và không bị thay đổi tỷ lệ.</li>
+                                    <li>Kiểm tra xem phần tử có thực sự hiển thị trên màn hình không.</li>
+                                    <li>Thử sử dụng tìm kiếm đa tỷ lệ (scale_range) nếu kích thước có thể thay đổi.</li>
+                                    <li>Thử sử dụng phát hiện cạnh Canny (use_canny=True) nếu hình ảnh mờ.</li>
+                                    <li>Chụp lại hình ảnh mẫu chính xác hơn.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="troubleshooting-item">
+                            <div class="problem">
+                                <h4>Tìm thấy hình ảnh sai vị trí</h4>
+                            </div>
+                            <div class="solution">
+                                <ul>
+                                    <li>Tăng ngưỡng tương đồng (threshold).</li>
+                                    <li>Sử dụng hình ảnh mẫu có đặc trưng độc đáo hơn.</li>
+                                    <li>Giới hạn vùng tìm kiếm (region) nếu có thể.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="troubleshooting-xml" class="mt-5">
+                    <h3>Lỗi XML Dump</h3>
+                    
+                    <div class="troubleshooting-grid">
+                        <div class="troubleshooting-item">
+                            <div class="problem">
+                                <h4>Lỗi khi lấy XML (get_ui_xml)</h4>
+                            </div>
+                            <div class="solution">
+                                <ul>
+                                    <li>Đảm bảo thiết bị đã kết nối và được cấp quyền.</li>
+                                    <li>Kiểm tra xem <code>uiautomator</code> có hoạt động trên thiết bị không (thử chạy <code>adb shell uiautomator dump /sdcard/ui.xml</code>).</li>
+                                    <li>Thử khởi động lại thiết bị.</li>
+                                    <li>Đảm bảo không có ứng dụng nào khác đang sử dụng <code>uiautomator</code>.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="troubleshooting-item">
+                            <div class="problem">
+                                <h4>Không tìm thấy phần tử (find_element_by_...)</h4>
+                            </div>
+                            <div class="solution">
+                                <ul>
+                                    <li>Kiểm tra lại văn bản hoặc thuộc tính tìm kiếm (chính tả, phân biệt hoa thường).</li>
+                                    <li>Đảm bảo phần tử thực sự tồn tại trong cấu trúc XML (kiểm tra file XML được dump ra).</li>
+                                    <li>Lấy lại cấu trúc XML mới nhất trước khi tìm kiếm nếu UI đã thay đổi.</li>
+                                    <li>Thử tìm kiếm với partial_match=True hoặc case_sensitive=False.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="troubleshooting-performance" class="mt-5">
+                    <h3>Vấn đề hiệu suất</h3>
+                    
+                    <div class="troubleshooting-grid">
+                        <div class="troubleshooting-item">
+                            <div class="problem">
+                                <h4>Nhận diện hình ảnh quá chậm</h4>
+                            </div>
+                            <div class="solution">
+                                <ul>
+                                    <li>Giới hạn vùng tìm kiếm (region).</li>
+                                    <li>Giảm kích thước hình ảnh mẫu.</li>
+                                    <li>Tránh sử dụng tìm kiếm đa tỷ lệ và góc xoay nếu không cần thiết.</li>
+                                    <li>Đảm bảo <code>use_gray=True</code>.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="troubleshooting-item">
+                            <div class="problem">
+                                <h4>Lấy XML Dump quá chậm</h4>
+                            </div>
+                            <div class="solution">
+                                <ul>
+                                    <li>Sử dụng XML Server (<code>start_xml_server</code> và <code>get_ui_xml_from_server</code>) nếu cần lấy XML nhiều lần.</li>
+                                    <li>Lưu trữ và tái sử dụng cấu trúc XML khi UI không thay đổi.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="troubleshooting-reporting" class="mt-5">
+                    <h3>Báo cáo lỗi</h3>
+                    
+                    <p>Nếu bạn gặp phải lỗi không thể khắc phục, vui lòng báo cáo trên <a href="https://github.com/tiendung102k3/oiadb/issues" target="_blank">GitHub Issues</a>. Khi báo cáo lỗi, hãy cung cấp các thông tin sau:</p>
+                    
+                    <ul>
+                        <li>Phiên bản OIADB bạn đang sử dụng.</li>
+                        <li>Phiên bản Python.</li>
+                        <li>Hệ điều hành của bạn.</li>
+                        <li>Thông tin thiết bị Android (Model, phiên bản Android).</li>
+                        <li>Mô tả chi tiết về lỗi và các bước để tái hiện lỗi.</li>
+                        <li>Mã nguồn gây ra lỗi (nếu có thể).</li>
+                        <li>Thông báo lỗi đầy đủ (traceback).</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <section id="contributing" class="fade-in">
+                <h2>Đóng góp</h2>
+                
+                <p>Chúng tôi hoan nghênh mọi đóng góp cho dự án OIADB! Dù là báo cáo lỗi, yêu cầu tính năng, cải thiện tài liệu hay đóng góp mã nguồn.</p>
+                
+                <div id="contributing-guidelines">
+                    <h3>Hướng dẫn đóng góp</h3>
+                    
+                    <p>Vui lòng tham khảo <a href="https://github.com/tiendung102k3/oiadb/blob/main/CONTRIBUTING.md" target="_blank">Hướng dẫn đóng góp</a> trên GitHub để biết chi tiết về quy trình đóng góp, quy tắc mã hóa và cách tạo Pull Request.</p>
+                </div>
+                
+                <div id="contributing-code" class="mt-4">
+                    <h3>Đóng góp mã nguồn</h3>
+                    
+                    <ol>
+                        <li>Fork repository <a href="https://github.com/tiendung102k3/oiadb" target="_blank">oiadb</a>.</li>
+                        <li>Tạo một nhánh mới cho tính năng hoặc sửa lỗi của bạn (<code>git checkout -b feature/AmazingFeature</code>).</li>
+                        <li>Thực hiện các thay đổi và commit (<code>git commit -m 'Add some AmazingFeature'</code>).</li>
+                        <li>Đẩy lên nhánh của bạn (<code>git push origin feature/AmazingFeature</code>).</li>
+                        <li>Mở một Pull Request trên GitHub.</li>
+                    </ol>
+                </div>
+                
+                <div id="contributing-docs" class="mt-4">
+                    <h3>Đóng góp tài liệu</h3>
+                    
+                    <p>Nếu bạn phát hiện lỗi chính tả, thông tin sai lệch hoặc muốn cải thiện tài liệu, bạn có thể:</p>
+                    <ul>
+                        <li>Tạo một issue trên GitHub để mô tả vấn đề.</li>
+                        <li>Hoặc, chỉnh sửa trực tiếp file Markdown trong thư mục <code>docs</code> trên GitHub và tạo Pull Request.</li>
+                    </ul>
+                </div>
+            </section>
+            
+            <!-- Documentation Pagination -->
+            <div class="docs-pagination">
+                <a href="examples.html" class="prev">
+                    <i class="fas fa-arrow-left"></i> Ví dụ
+                </a>
+                <!-- No next page -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>OIADB</h3>
+                    <p>Thư viện Python wrapper cho Android Debug Bridge với các tính năng nâng cao như nhận diện hình ảnh và XML dump.</p>
+                    
+                    <div class="social-links">
+                        <a href="https://github.com/tiendung102k3/oiadb" target="_blank" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://pypi.org/project/oiadb/" target="_blank" aria-label="PyPI">
+                            <i class="fab fa-python"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Tài liệu</h3>
+                    <ul>
+                        <li><a href="getting-started.html">Bắt đầu</a></li>
+                        <li><a href="features.html">Tính năng</a></li>
+                        <li><a href="api-reference.html">API Reference</a></li>
+                        <li><a href="guides.html">Hướng dẫn</a></li>
+                        <li><a href="examples.html">Ví dụ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Tài nguyên</h3>
+                    <ul>
+                        <li><a href="resources.html#changelog">Changelog</a></li>
+                        <li><a href="resources.html#license">Giấy phép</a></li>
+                        <li><a href="resources.html#faq">Câu hỏi thường gặp</a></li>
+                        <li><a href="resources.html#troubleshooting">Xử lý sự cố</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Liên kết</h3>
+                    <ul>
+                        <li><a href="https://github.com/tiendung102k3/oiadb" target="_blank">GitHub</a></li>
+                        <li><a href="https://pypi.org/project/oiadb/" target="_blank">PyPI</a></li>
+                        <li><a href="https://github.com/tiendung102k3/oiadb/issues" target="_blank">Báo cáo lỗi</a></li>
+                        <li><a href="https://github.com/tiendung102k3/oiadb/blob/main/CONTRIBUTING.md" target="_blank">Đóng góp</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 OIADB. Được phát hành dưới giấy phép MIT.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+</body>
+</html>

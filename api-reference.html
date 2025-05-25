@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Reference OIADB - Tài liệu chi tiết về các lớp và phương thức</title>
+    <meta name="description" content="Tài liệu API Reference đầy đủ cho thư viện OIADB, bao gồm tất cả các lớp, phương thức và tham số.">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap">
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <a href="./" class="logo">
+                <svg class="logo-icon" viewBox="0 0 24 24">
+                    <path d="M17.6,9.48l1.84-3.18c0.16-0.31,0.04-0.69-0.26-0.85c-0.29-0.15-0.65-0.06-0.83,0.22l-1.88,3.24 c-2.86-1.21-6.08-1.21-8.94,0L5.65,5.67c-0.19-0.29-0.58-0.38-0.87-0.2C4.5,5.65,4.41,6.01,4.56,6.3L6.4,9.48 C3.3,11.25,1.28,14.44,1,18h22C22.72,14.44,20.7,11.25,17.6,9.48z M7,15.25c-0.69,0-1.25-0.56-1.25-1.25 c0-0.69,0.56-1.25,1.25-1.25S8.25,13.31,8.25,14C8.25,14.69,7.69,15.25,7,15.25z M17,15.25c-0.69,0-1.25-0.56-1.25-1.25 c0-0.69,0.56-1.25,1.25-1.25s1.25,0.56,1.25,1.25C18.25,14.69,17.69,15.25,17,15.25z"></path>
+                </svg>
+                <span class="logo-text">OIADB</span>
+            </a>
+            
+            <div class="main-nav">
+                <button class="menu-toggle" aria-label="Toggle menu">
+                    <span class="hamburger"></span>
+                </button>
+                
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="./">Trang chủ</a></li>
+                        <li><a href="getting-started.html">Bắt đầu</a></li>
+                        <li><a href="features.html">Tính năng</a></li>
+                        <li><a href="api-reference.html" class="active">API Reference</a></li>
+                        <li><a href="guides.html">Hướng dẫn</a></li>
+                        <li><a href="examples.html">Ví dụ</a></li>
+                        <li><a href="resources.html">Tài nguyên</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="theme-switch-wrapper">
+                    <label class="theme-switch" for="theme-switch">
+                        <input type="checkbox" id="theme-switch">
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="theme-label"><i class="fas fa-moon"></i></span>
+                </div>
+                
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Tìm kiếm...">
+                    <button id="search-button" aria-label="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <div id="search-results" class="search-results"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Documentation Container -->
+    <div class="container docs-container">
+        <!-- Sidebar -->
+        <aside class="docs-sidebar">
+            <div class="docs-nav">
+                <div class="docs-nav-section">
+                    <a href="#" class="docs-nav-title">Trang chủ</a>
+                    <div class="docs-nav-links">
+                        <a href="./">Quay lại trang chủ</a>
+                    </div>
+                </div>
+                
+                <div class="docs-nav-section">
+                    <a href="#myadb" class="docs-nav-title">MyADB</a>
+                    <div class="docs-nav-links">
+                        <a href="#myadb-init">__init__</a>
+                        <a href="#myadb-get-devices">get_devices</a>
+                        <a href="#myadb-get-device-info">get_device_info</a>
+                        <a href="#myadb-reboot-device">reboot_device</a>
+                        <a href="#myadb-execute-command">execute_command</a>
+                    </div>
+                </div>
+                
+                <div class="docs-nav-section">
+                    <a href="#interaction" class="docs-nav-title">Interaction</a>
+                    <div class="docs-nav-links">
+                        <a href="#interaction-tap">tap</a>
+                        <a href="#interaction-swipe">swipe</a>
+                        <a href="#interaction-text-input">text_input</a>
+                        <a href="#interaction-home">home</a>
+                        <a href="#interaction-back">back</a>
+                        <a href="#interaction-recent-apps">recent_apps</a>
+                    </div>
+                </div>
+                
+                <div class="docs-nav-section">
+                    <a href="#image-interaction" class="docs-nav-title">Image Interaction</a>
+                    <div class="docs-nav-links">
+                        <a href="#image-interaction-find-image">find_image</a>
+                        <a href="#image-interaction-tap-image">tap_image</a>
+                        <a href="#image-interaction-wait-and-tap-image">wait_and_tap_image</a>
+                        <a href="#image-interaction-is-image-present">is_image_present</a>
+                        <a href="#image-interaction-drag-image-to-image">drag_image_to_image</a>
+                    </div>
+                </div>
+                
+                <div class="docs-nav-section">
+                    <a href="#xml-dump" class="docs-nav-title">XML Dump</a>
+                    <div class="docs-nav-links">
+                        <a href="#xml-dump-get-ui-xml">get_ui_xml</a>
+                        <a href="#xml-dump-find-element-by-text">find_element_by_text</a>
+                        <a href="#xml-dump-find-element-by-attribute">find_element_by_attribute</a>
+                        <a href="#xml-dump-click-element">click_element</a>
+                        <a href="#xml-dump-input-text">input_text</a>
+                    </div>
+                </div>
+                
+                <div class="docs-nav-section">
+                    <a href="#apps" class="docs-nav-title">Apps</a>
+                    <div class="docs-nav-links">
+                        <a href="#apps-install-app">install_app</a>
+                        <a href="#apps-uninstall-app">uninstall_app</a>
+                        <a href="#apps-start-app">start_app</a>
+                        <a href="#apps-stop-app">stop_app</a>
+                        <a href="#apps-clear-app-data">clear_app_data</a>
+                    </div>
+                </div>
+                
+                <div class="docs-nav-section">
+                    <a href="#connect" class="docs-nav-title">Connect</a>
+                    <div class="docs-nav-links">
+                        <a href="#connect-connect-over-network">connect_over_network</a>
+                        <a href="#connect-disconnect-network">disconnect_network</a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="docs-content">
+            <h1>API Reference</h1>
+            
+            <section id="myadb" class="fade-in">
+                <h2>MyADB</h2>
+                
+                <p>Lớp chính của OIADB, cung cấp giao diện để tương tác với ADB.</p>
+                
+                <div class="api-item" id="myadb-init">
+                    <div class="api-header">
+                        <h3>__init__</h3>
+                        <span class="api-badge constructor">Constructor</span>
+                    </div>
+                    
+                    <div class="api-signature">
+                        <pre><code class="language-python">def __init__(self, device_id=None, auto_install_adb=True, adb_path=None)</code></pre>
+                    </div>
+                    
+                    <p>Khởi tạo đối tượng MyADB.</p>
+                    
+                    <div class="api-params">
+                        <h4>Tham số</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Tên</th>
+                                    <th>Kiểu</th>
+                                    <th>Mặc định</th>
+                                    <th>Mô tả</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>device_id</td>
+                                    <td>str</td>
+                                    <td>None</td>
+                                    <td>ID của thiết bị để kết nối. Nếu None, sẽ sử dụng thiết bị đầu tiên được tìm thấy.</td>
+                                </tr>
+                                <tr>
+                                    <td>auto_install_adb</td>
+                                    <td>bool</td>
+                                    <td>True</td>
+                                    <td>Tự động tải xuống và cài đặt ADB nếu cần.</td>
+                                </tr>
+                                <tr>
+                                    <td>adb_path</td>
+                                    <td>str</td>
+                                    <td>None</td>
+                                    <td>Đường dẫn đến ADB đã cài đặt. Nếu None, sẽ tìm kiếm trong PATH hoặc tự động cài đặt.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="api-example">
+                        <h4>Ví dụ</h4>
+                        <pre><code class="language-python">from oiadb import MyADB
+
+# Khởi tạo với thiết bị mặc định
+adb = MyADB()
+
+# Khởi tạo với thiết bị cụ thể
+adb = MyADB(device_id="emulator-5554")
+
+# Tắt tự động cài đặt ADB
+adb = MyADB(auto_install_adb=False)
+
+# Chỉ định đường dẫn ADB
+adb = MyADB(adb_path="/path/to/adb")</code></pre>
+                    </div>
+                </div>
+                
+                <div class="api-item" id="myadb-get-devices">
+                    <div class="api-header">
+                        <h3>get_devices</h3>
+                        <span class="api-badge method">Method</span>
+                    </div>
+                    
+                    <div class="api-signature">
+                        <pre><code class="language-python">def get_devices(self)</code></pre>
+                    </div>
+                    
+                    <p>Lấy danh sách các thiết bị đã kết nối.</p>
+                    
+                    <div class="api-returns">
+                        <h4>Trả về</h4>
+                        <p><strong>list</strong>: Danh sách các ID thiết bị đã kết nối.</p>
+                    </div>
+                    
+                    <div class="api-example">
+                        <h4>Ví dụ</h4>
+                        <pre><code class="language-python">devices = adb.get_devices()
+print(devices)  # ['emulator-5554', 'device_id_2', ...]</code></pre>
+                    </div>
+                </div>
+                
+                <div class="api-item" id="myadb-get-device-info">
+                    <div class="api-header">
+                        <h3>get_device_info</h3>
+                        <span class="api-badge method">Method</span>
+                    </div>
+                    
+                    <div class="api-signature">
+                        <pre><code class="language-python">def get_device_info(self)</code></pre>
+                    </div>
+                    
+                    <p>Lấy thông tin chi tiết về thiết bị hiện tại.</p>
+                    
+                    <div class="api-returns">
+                        <h4>Trả về</h4>
+                        <p><strong>dict</strong>: Từ điển chứa thông tin thiết bị (model, manufacturer, android_version, etc.).</p>
+                    </div>
+                    
+                    <div class="api-example">
+                        <h4>Ví dụ</h4>
+                        <pre><code class="language-python">device_info = adb.get_device_info()
+print(f"Model: {device_info['model']}")
+print(f"Android version: {device_info['android_version']}")</code></pre>
+                    </div>
+                </div>
+                
+                <div class="api-item" id="myadb-reboot-device">
+                    <div class="api-header">
+                        <h3>reboot_device</h3>
+                        <span class="api-badge method">Method</span>
+                    </div>
+                    
+                    <div class="api-signature">
+                        <pre><code class="language-python">def reboot_device(self, mode=None)</code></pre>
+                    </div>
+                    
+                    <p>Khởi động lại thiết bị.</p>
+                    
+                    <div class="api-params">
+                        <h4>Tham số</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Tên</th>
+                                    <th>Kiểu</th>
+                                    <th>Mặc định</th>
+                                    <th>Mô tả</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>mode</td>
+                                    <td>str</td>
+                                    <td>None</td>
+                                    <td>Chế độ khởi động lại. Có thể là None (khởi động bình thường), 'bootloader', hoặc 'recovery'.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="api-returns">
+                        <h4>Trả về</h4>
+                        <p><strong>bool</strong>: True nếu thành công, False nếu thất bại.</p>
+                    </div>
+                    
+                    <div class="api-example">
+                        <h4>Ví dụ</h4>
+                        <pre><code class="language-python"># Khởi động lại bình thường
+adb.reboot_device()
+
+# Khởi động vào bootloader
+adb.reboot_device(mode='bootloader')
+
+# Khởi động vào recovery
+adb.reboot_device(mode='recovery')</code></pre>
+                    </div>
+                </div>
+                
+                <div class="api-item" id="myadb-execute-command">
+                    <div class="api-header">
+                        <h3>execute_command</h3>
+                        <span class="api-badge method">Method</span>
+                    </div>
+                    
+                    <div class="api-signature">
+                        <pre><code class="language-python">def execute_command(self, command, shell=False, timeout=None)</code></pre>
+                    </div>
+                    
+                    <p>Thực thi lệnh ADB.</p>
+                    
+                    <div class="api-params">
+                        <h4>Tham số</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Tên</th>
+                                    <th>Kiểu</th>
+                                    <th>Mặc định</th>
+                                    <th>Mô tả</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>command</td>
+                                    <td>str or list</td>
+                                    <td>Required</td>
+                                    <td>Lệnh ADB để thực thi. Có thể là chuỗi hoặc danh sách các đối số.</td>
+                                </tr>
+                                <tr>
+                                    <td>shell</td>
+                                    <td>bool</td>
+                                    <td>False</td>
+                                    <td>Nếu True, thực thi lệnh trong shell của thiết bị.</td>
+                                </tr>
+                                <tr>
+                                    <td>timeout</td>
+                                    <td>float</td>
+                                    <td>None</td>
+                                    <td>Thời gian chờ tối đa (giây) cho lệnh. None có nghĩa là không có thời gian chờ.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="api-returns">
+                        <h4>Trả về</h4>
+                        <p><strong>str</strong>: Kết quả đầu ra của lệnh.</p>
+                    </div>
+                    
+                    <div class="api-example">
+                        <h4>Ví dụ</h4>
+                        <pre><code class="language-python"># Thực thi lệnh ADB cơ bản
+result = adb.execute_command("devices")
+print(result)
+
+# Thực thi lệnh shell
+result = adb.execute_command("ls /sdcard", shell=True)
+print(result)
+
+# Thực thi với thời gian chờ
+result = adb.execute_command("pull /sdcard/large_file.zip", timeout=60)
+print(result)</code></pre>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="interaction" class="fade-in">
+                <h2>Interaction</h2>
+                
+                <p>Module này cung cấp các phương thức để tương tác cơ bản với thiết bị Android.</p>
+                
+                <div class="api-item" id="interaction-tap">
+                    <div class="api-header">
+                        <h3>tap</h3>
+                        <span class="api-badge function">Function</span>
+                    </div>
+                    
+                    <div class="api-signature">
+                        <pre><code class="language-python">def tap(x, y)</code></pre>
+                    </div>
+                    
+                    <p>Nhấn vào tọa độ màn hình.</p>
+                    
+                    <div class="api-params">
+                        <h4>Tham số</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Tên</th>
+                                    <th>Kiểu</th>
+                                    <th>Mô tả</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>x</td>
+                                    <td>int</td>
+                                    <td>Tọa độ X trên màn hình.</td>
+                                </tr>
+                                <tr>
+                                    <td>y</td>
+                                    <td>int</td>
+                                    <td>Tọa độ Y trên màn hình.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="api-returns">
+                        <h4>Trả về</h4>
+                        <p><strong>bool</strong>: True nếu thành công, False nếu thất bại.</p>
+                    </div>
+                    
+                    <div class="api-example">
+                        <h4>Ví dụ</h4>
+                        <pre><code class="language-python">from oiadb.commands import interaction
+
+# Nhấn vào tọa độ (500, 800) trên màn hình
+interaction.tap(500, 800)</code></pre>
+                    </div>
+                </div>
+                
+                <div class="api-item" id="interaction-swipe">
+                    <div class="api-header">
+                        <h3>swipe</h3>
+                        <span class="api-badge function">Function</span>
+                    </div>
+                    
+                    <div class="api-signature">
+                        <pre><code class="language-python">def swipe(start_x, start_y, end_x, end_y, duration=300)</code></pre>
+                    </div>
+                    
+                    <p>Vuốt từ điểm bắt đầu đến điểm kết thúc.</p>
+                    
+                    <div class="api-params">
+                        <h4>Tham số</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Tên</th>
+                                    <th>Kiểu</th>
+                                    <th>Mặc định</th>
+                                    <th>Mô tả</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>start_x</td>
+                                    <td>int</td>
+                                    <td>Required</td>
+                                    <td>Tọa độ X bắt đầu.</td>
+                                </tr>
+                                <tr>
+                                    <td>start_y</td>
+                                    <td>int</td>
+                                    <td>Required</td>
+                                    <td>Tọa độ Y bắt đầu.</td>
+                                </tr>
+                                <tr>
+                                    <td>end_x</td>
+                                    <td>int</td>
+                                    <td>Required</td>
+                                    <td>Tọa độ X kết thúc.</td>
+                                </tr>
+                                <tr>
+                                    <td>end_y</td>
+                                    <td>int</td>
+                                    <td>Required</td>
+                                    <td>Tọa độ Y kết thúc.</td>
+                                </tr>
+                                <tr>
+                                    <td>duration</td>
+                                    <td>int</td>
+                                    <td>300</td>
+                                    <td>Thời gian vuốt (ms).</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="api-returns">
+                        <h4>Trả về</h4>
+                        <p><strong>bool</strong>: True nếu thành công, False nếu thất bại.</p>
+                    </div>
+                    
+                    <div class="api-example">
+                        <h4>Ví dụ</h4>
+                        <pre><code class="language-python"># Vuốt từ trái sang phải
+interaction.swipe(100, 500, 900, 500)
+
+# Vuốt từ trên xuống dưới (cuộn xuống)
+interaction.swipe(500, 300, 500, 1500)
+
+# Vuốt chậm (1 giây)
+interaction.swipe(100, 500, 900, 500, duration=1000)</code></pre>
+                    </div>
+                </div>
+                
+                <!-- Thêm các API khác tương tự -->
+                
+            </section>
+            
+            <section id="image-interaction" class="fade-in">
+                <h2>Image Interaction</h2>
+                
+                <p>Module này cung cấp các phương thức để tương tác với thiết bị dựa trên nhận diện hình ảnh.</p>
+                
+                <div class="api-item" id="image-interaction-find-image">
+                    <div class="api-header">
+                        <h3>find_image</h3>
+                        <span class="api-badge function">Function</span>
+                    </div>
+                    
+                    <div class="api-signature">
+                        <pre><code class="language-python">def find_image(template_path, threshold=0.8, region=None, scale_range=(0.8, 1.2), scale_steps=5, rotation_range=(0, 0), rotation_steps=1, use_gray=True, use_canny=False)</code></pre>
+                    </div>
+                    
+                    <p>Tìm hình ảnh mẫu trên màn hình thiết bị.</p>
+                    
+                    <div class="api-params">
+                        <h4>Tham số</h4>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Tên</th>
+                                    <th>Kiểu</th>
+                                    <th>Mặc định</th>
+                                    <th>Mô tả</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>template_path</td>
+                                    <td>str</td>
+                                    <td>Required</td>
+                                    <td>Đường dẫn đến hình ảnh mẫu.</td>
+                                </tr>
+                                <tr>
+                                    <td>threshold</td>
+                                    <td>float</td>
+                                    <td>0.8</td>
+                                    <td>Ngưỡng tương đồng (0.0 - 1.0).</td>
+                                </tr>
+                                <tr>
+                                    <td>region</td>
+                                    <td>tuple</td>
+                                    <td>None</td>
+                                    <td>Vùng tìm kiếm (x, y, width, height). None = toàn màn hình.</td>
+                                </tr>
+                                <tr>
+                                    <td>scale_range</td>
+                                    <td>tuple</td>
+                                    <td>(0.8, 1.2)</td>
+                                    <td>Phạm vi tỷ lệ để tìm kiếm.</td>
+                                </tr>
+                                <tr>
+                                    <td>scale_steps</td>
+                                    <td>int</td>
+                                    <td>5</td>
+                                    <td>Số bước tỷ lệ.</td>
+                                </tr>
+                                <tr>
+                                    <td>rotation_range</td>
+                                    <td>tuple</td>
+                                    <td>(0, 0)</td>
+                                    <td>Phạm vi góc xoay (độ).</td>
+                                </tr>
+                                <tr>
+                                    <td>rotation_steps</td>
+                                    <td>int</td>
+                                    <td>1</td>
+                                    <td>Số bước góc xoay.</td>
+                                </tr>
+                                <tr>
+                                    <td>use_gray</td>
+                                    <td>bool</td>
+                                    <td>True</td>
+                                    <td>Sử dụng ảnh xám để tăng tốc độ.</td>
+                                </tr>
+                                <tr>
+                                    <td>use_canny</td>
+                                    <td>bool</td>
+                                    <td>False</td>
+                                    <td>Sử dụng phát hiện cạnh Canny cho hình ảnh mờ.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="api-returns">
+                        <h4>Trả về</h4>
+                        <p><strong>tuple or None</strong>: (x, y, confidence) nếu tìm thấy, None nếu không tìm thấy.</p>
+                    </div>
+                    
+                    <div class="api-example">
+                        <h4>Ví dụ</h4>
+                        <pre><code class="language-python">from oiadb.commands import image_interaction
+
+# Tìm hình ảnh cơ bản
+result = image_interaction.find_image("/path/to/button.png")
+if result:
+    x, y, confidence = result
+    print(f"Đã tìm thấy hình ảnh tại ({x}, {y}) với độ tương đồng {confidence}")
+
+# Tìm với ngưỡng tương đồng cao hơn
+result = image_interaction.find_image("/path/to/icon.png", threshold=0.9)
+
+# Tìm trong vùng cụ thể
+result = image_interaction.find_image("/path/to/element.png", region=(100, 200, 400, 300))
+
+# Tìm với nhiều tỷ lệ và góc xoay
+result = image_interaction.find_image(
+    "/path/to/template.png",
+    scale_range=(0.5, 1.5),
+    scale_steps=10,
+    rotation_range=(-30, 30),
+    rotation_steps=6
+)</code></pre>
+                    </div>
+                </div>
+                
+                <!-- Thêm các API khác tương tự -->
+                
+            </section>
+            
+            <!-- Thêm các section khác tương tự -->
+            
+            <!-- Documentation Pagination -->
+            <div class="docs-pagination">
+                <a href="features.html" class="prev">
+                    <i class="fas fa-arrow-left"></i> Tính năng
+                </a>
+                <a href="guides.html" class="next">
+                    Hướng dẫn <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>OIADB</h3>
+                    <p>Thư viện Python wrapper cho Android Debug Bridge với các tính năng nâng cao như nhận diện hình ảnh và XML dump.</p>
+                    
+                    <div class="social-links">
+                        <a href="https://github.com/tiendung102k3/oiadb" target="_blank" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://pypi.org/project/oiadb/" target="_blank" aria-label="PyPI">
+                            <i class="fab fa-python"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Tài liệu</h3>
+                    <ul>
+                        <li><a href="getting-started.html">Bắt đầu</a></li>
+                        <li><a href="features.html">Tính năng</a></li>
+                        <li><a href="api-reference.html">API Reference</a></li>
+                        <li><a href="guides.html">Hướng dẫn</a></li>
+                        <li><a href="examples.html">Ví dụ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Tài nguyên</h3>
+                    <ul>
+                        <li><a href="resources.html#changelog">Changelog</a></li>
+                        <li><a href="resources.html#license">Giấy phép</a></li>
+                        <li><a href="resources.html#faq">Câu hỏi thường gặp</a></li>
+                        <li><a href="resources.html#troubleshooting">Xử lý sự cố</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Liên kết</h3>
+                    <ul>
+                        <li><a href="https://github.com/tiendung102k3/oiadb" target="_blank">GitHub</a></li>
+                        <li><a href="https://pypi.org/project/oiadb/" target="_blank">PyPI</a></li>
+                        <li><a href="https://github.com/tiendung102k3/oiadb/issues" target="_blank">Báo cáo lỗi</a></li>
+                        <li><a href="https://github.com/tiendung102k3/oiadb/blob/main/CONTRIBUTING.md" target="_blank">Đóng góp</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 OIADB. Được phát hành dưới giấy phép MIT.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+</body>
+</html>
